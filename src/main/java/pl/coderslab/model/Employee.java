@@ -1,9 +1,14 @@
 package pl.coderslab.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Employee {
+
 // variables.
     private int id;
     private String name;
@@ -27,12 +32,12 @@ public class Employee {
 // getters and setters;
 
 
-    public String getName() {
-        return name;
+    public int getId() {
+        return id;
     }
 
-    void setId(int id) { // to convert String into class - only within package
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -78,26 +83,105 @@ public class Employee {
     public void setHourPrice(float hourPrice) {
         this.hourPrice = hourPrice;
     }
-    public Employee convertStingToEmployee (List<String> emplFields){
 
+    // Dao Create/Update
+    // Zapisz do  BD zapisuje nowy element do BD ub zmodyfikowany element. Poznajemy po id==0
+    public void saveToDB(Connection conn) throws SQLException {
+        if (this.id == 0) {
+            String sql = "INSERT INTO employee(name,surname,address,phone,note,hourprice) VALUES (?, ?, ?, ?, ?, ?)";
+            String[] generatedColumns = {"ID"};
+            PreparedStatement preparedStatement = conn.prepareStatement(sql, generatedColumns);
+            preparedStatement.setString(1, this.name);
+            preparedStatement.setString(2, this.surname);
+            preparedStatement.setString(3, this.address);
+            preparedStatement.setString(4, this.phone);
+            preparedStatement.setString(5, this.note);
+            preparedStatement.setFloat(6, this.hourPrice);
+            preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                this.id = rs.getInt(1);
+            }
+        } else {
+            String sql = "UPDATE employee SET name=?,surname=?, address=?,phone=?,note=?,hourprice=? WHERE id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, this.name);
+            preparedStatement.setString(2, this.surname);
+            preparedStatement.setString(3, this.address);
+            preparedStatement.setString(4, this.phone);
+            preparedStatement.setString(5, this.note);
+            preparedStatement.setFloat(6, this.hourPrice);
+            preparedStatement.setInt(7, this.getId());
+            preparedStatement.executeUpdate();
+        }
+    }
+    // DAO READ
+    // Wczytaj 1 employee po id. Metoda statyczna dlatego przekzujemy dodatkowo id
+    static public Employee loadEmployeeById(Connection conn, int id) throws SQLException {
+        String sql = "SELECT * FROM employee where id=?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            Employee loadedEmployee = new Employee();
+            loadedEmployee.id = resultSet.getInt("id");
+            loadedEmployee.name = resultSet.getString("name");
+            loadedEmployee.surname = resultSet.getString("surname");
+            loadedEmployee.address = resultSet.getString("address");
+            loadedEmployee.phone = resultSet.getString("phone");
+            loadedEmployee.note = resultSet.getString("note");
+            loadedEmployee.hourPrice=resultSet.getFloat("hourprice");
+            return loadedEmployee;}
+        return null;}
+
+    // Wczytaj wszystkich z BD
+    static public List<Employee> loadAllEmployees(Connection conn) throws SQLException {
+        ArrayList<Employee> employees = new ArrayList<Employee>();
+        String sql = "SELECT * FROM employee";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Employee loadedEmployee = new Employee();
+            loadedEmployee.id = resultSet.getInt("id");
+            loadedEmployee.name = resultSet.getString("name");
+            loadedEmployee.surname = resultSet.getString("surname");
+            loadedEmployee.address = resultSet.getString("address");
+            loadedEmployee.phone = resultSet.getString("phone");
+            loadedEmployee.note = resultSet.getString("note");
+            loadedEmployee.hourPrice = resultSet.getFloat("hourprice");
+            employees.add(loadedEmployee);
+        }
+        return employees;
+    }
+    // DAO DELETE
+    // usuń employee zBD
+    public void delete(Connection conn) throws SQLException {
+        if (this.id != 0) {
+            String sql = "DELETE FROM employee WHERE id=?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, this.id);
+            preparedStatement.executeUpdate();
+            this.id = 0;
+        }
+    }
+    // converts
+    public void convertStingToEmployee (List<String> emplFields){
         Employee employee = new Employee();
         String sId = emplFields.get(0);
         try {
             employee.id=Integer.parseInt(emplFields.get(0));
-            String name = emplFields.get(1);
-            employee surname = emplFields.get(2);
-            employee address = emplFields.get(3);
-            employee phone = emplFields.get(4);
-            employee note = emplFields.get(5);
-            employee hourPrice = Float.parseFloat(emplFields.get(6));
-            return  employee;
+            employee.name = emplFields.get(1);
+            employee.surname = emplFields.get(2);
+            employee.address = emplFields.get(3);
+            employee.phone = emplFields.get(4);
+            employee.note = emplFields.get(5);
+            employee.hourPrice = Float.parseFloat(emplFields.get(6));
         } catch (NumberFormatException e) {
             e.printStackTrace(); /// tou można lepiej poprowadzić błąd....
-            return null;
         }
     }
 
-    public List<String> convertEmployeeToString (Employee employee) {
+    public List<String> convertEmployeeToString () {
         List<String> emplList = new ArrayList<>();
         emplList.add(String.valueOf(id));
         emplList.add(name);
@@ -108,6 +192,7 @@ public class Employee {
         emplList.add(String.valueOf(hourPrice));
         return emplList;
     }
+
 
 }
 
