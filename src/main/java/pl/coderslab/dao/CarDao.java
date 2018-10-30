@@ -33,7 +33,7 @@ public class CarDao {
                 preparedStatement.executeUpdate();
                 ResultSet rs = preparedStatement.getGeneratedKeys();
                 if (rs.next()) {
-                    return rs.getInt("id");
+                    return rs.getInt(1);
                 }
             } catch (SQLException e) {
                 return -1;

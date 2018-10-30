@@ -2,6 +2,7 @@ package pl.coderslab.controler;
 
 import pl.coderslab.model.Car;
 import pl.coderslab.dao.CarDao;
+import pl.coderslab.model.Client;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@WebServlet(name = "CarControl")
+@WebServlet(name = "CarControl", urlPatterns = "/CarControl")
 public class CarControl extends HttpServlet {
 
 //####################################################################################################################################
@@ -29,7 +30,6 @@ public class CarControl extends HttpServlet {
             cId=0;
         }
         Car newCar= new Car(); // new car is empty (ADD)
-
         if (cId!=0) { // MODIFY
             newCar = CarDao.loadCarById(cId); // new car is ready to (MODIFY)
         }
@@ -39,7 +39,9 @@ public class CarControl extends HttpServlet {
             newCar.setYearProd(Integer.parseInt(request.getParameter("yearProd")));
             newCar.setRegistration(request.getParameter("registration"));
             newCar.setNextReview(LocalDate.parse(request.getParameter("nextReview")));
-            newCar.setOwnerId(Integer.parseInt(request.getParameter("yearProd")));
+            if(request.getParameter("ownerId") != null) {
+                newCar.setOwnerId(Integer.parseInt(request.getParameter("ownerId")));
+            }else newCar.setOwnerId(0);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -67,7 +69,21 @@ public class CarControl extends HttpServlet {
                 break;
             }
             case "2": { // ADD CAR
-                request.getRequestDispatcher("carAdd.jsp").forward(request, response);
+                String ident = request.getParameter("ident");
+                int clId=0;
+                try {
+                    clId = Integer.parseInt(ident);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                if (clId!=0) {
+                    request.setAttribute("clId", clId);
+                    request.getRequestDispatcher("carAdd.jsp").forward(request, response);
+                } else {
+                    List<Car> cars = CarDao.loadAllCars();
+                    request.setAttribute("cars", cars);
+                    request.getRequestDispatcher("carShowAll.jsp").forward(request, response);
+                }
                 break;
             }
             case "3": { // SHOW DETAILS

@@ -15,9 +15,10 @@
 <table>
     <thead></thead>
     <tr>
-        <td><a href="index.jsp">MENU </a></td>
-        <td><a href="EmployeeControl?opt=1">PRACOWNICY </a></td>
-        <td><a href="ClientControl?opt=1">KLIENCI </a></td>
+        <td><a href="index.jsp">[MENU] |</a></td>
+        <td><a href="EmployeeControl?opt=1">PRACOWNICY | </a></td>
+        <td><a href="ClientControl?opt=1">KLIENCI | </a></td>
+        <td><a href="CarControl?opt=1">SAMOCHODY |</a></td>
     </tr>
 </table>
 </body>
