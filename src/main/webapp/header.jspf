@@ -11,8 +11,14 @@
     <title>MENU</title>
 </head>
 <body>
-<h1>Jestem w header jspf[MENU]</h1>
-    <h2><a href="EmployeeControl?opt=1">Pracownicy</a></h2>
 
+<table>
+    <thead></thead>
+    <tr>
+        <td><a href="index.jsp">MENU </a></td>
+        <td><a href="EmployeeControl?opt=1">PRACOWNICY </a></td>
+        <td><a href="ClientControl?opt=1">KLIENCI </a></td>
+    </tr>
+</table>
 </body>
 </html>

@@ -12,7 +12,9 @@
     <title>MODIFY</title>
 </head>
 <body>
+<%@ include file="header.jspf" %>
 <form method="post" action="EmployeeControl">
+    <input type="hidden" id="emplId" name="emplId" value=${empl.id}>
     <label>Imię</label><input type="text" name="name" value=${empl.name}><br>
     <label>Nazwisko</label><input type="text" name="surname" value=${empl.surname}><br>
     <label>Adres</label><input type="text" name="address" value=${empl.address}><br>
@@ -21,5 +23,6 @@
     <label>Stawka godzinowa</label><input type="number" name="hourPrice" step="0.01" value=${empl.hourPrice}><br>
     <input type="submit" value="Modyfikuj"><br>
 </form>
+<%@ include file="footer.jspf" %>
 </body>
 </html>

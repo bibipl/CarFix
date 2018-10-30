@@ -11,6 +11,7 @@
     <title>DELETE</title>
 </head>
 <body>
+<%@ include file="header.jspf" %>
 <table>
     <thead></thead>
     <tr><td>Numer :</td><td>${empl.id}</td></tr>
@@ -28,6 +29,6 @@
     <td><a href="EmployeeControl?opt=1">NIE</a></td>
     </thead>
 </table>
-
+<%@ include file="footer.jspf" %>
 </body>
 </html>

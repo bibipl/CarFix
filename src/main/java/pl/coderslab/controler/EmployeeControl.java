@@ -19,7 +19,22 @@ import java.util.List;
 public class EmployeeControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=utf-8");
+        String emplId = request.getParameter("emplId");
+        int eId=0;
+        try {
+            eId = Integer.parseInt(emplId);
+        } catch (NumberFormatException e) {
+           eId=0;
+        }
         Employee newEmployee = new Employee();
+
+        if (eId!=0) { // we want to modify and we need real id in newEmployee
+            try {
+                newEmployee = Employee.loadEmployeeById(DbUtil.getConn(), eId); // we want to get employee with real id!=0
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         newEmployee.setName(request.getParameter("name"));
         newEmployee.setSurname(request.getParameter("surname"));
         newEmployee.setAddress(request.getParameter("address"));
@@ -32,7 +47,7 @@ public class EmployeeControl extends HttpServlet {
             newEmployee.setHourPrice(0); // jeśli zły format to zero!
         }
         try {
-            newEmployee.saveToDB(DbUtil.getConn());
+            newEmployee.saveToDB(DbUtil.getConn()); // id newEmployee.id=0 - new one if !=0 - old one to modify
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +55,7 @@ public class EmployeeControl extends HttpServlet {
             List<Employee> workers = Employee.loadAllEmployees(DbUtil.getConn());
             if (workers.size() != 0) {
                 request.setAttribute("empl", workers);
-                request.getRequestDispatcher("showEmployees.jsp").forward(request, response);
+                request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
             } else {
                 response.getWriter().append("Nie ma nic do wyświetlenia");
             }
@@ -59,7 +74,7 @@ public class EmployeeControl extends HttpServlet {
                     workers = Employee.loadAllEmployees(DbUtil.getConn());
                     if (workers.size() != 0) {
                         request.setAttribute("empl", workers);
-                        request.getRequestDispatcher("showEmployees.jsp").forward(request, response);
+                        request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
                     } else {
                         response.getWriter().append("Nie ma nic do wyświetlenia");
                     }
@@ -69,7 +84,7 @@ public class EmployeeControl extends HttpServlet {
                 break;
             }
             case "2": { // add new employee
-                request.getRequestDispatcher("addEmployee.jsp").forward(request, response);
+                request.getRequestDispatcher("employAdd.jsp").forward(request, response);
                 break;
             }
             case "3": { // show details by id
@@ -83,27 +98,28 @@ public class EmployeeControl extends HttpServlet {
                     a.printStackTrace();
                 }
                 request.setAttribute("empl", empl);
-                request.getRequestDispatcher("showEmplById.jsp").forward(request, response);
+                request.getRequestDispatcher("employShowById.jsp").forward(request, response);
                 break;
             }
             case "4": {
                 String ident = request.getParameter("ident");
-                response.getWriter().append("Modyfikuj pracownika o Identyfikatorze: " + ident);
-                // wyświetlić formularz z wpisanymi wartościami domyślnymi
-                // Formularz wysłac do POSTA
-                // save to DB z POSTA ma już 2 opcje.
-                // jeśli id=0  to dopisuje nowy
-                // jeśli id!+0 to modyfikuje.
-                // trzeba przesać do POSTA ident!! jak to zrobić bez formularza ?
-
-
+                Employee empl =new Employee();
+                try {
+                    empl = Employee.loadEmployeeById (DbUtil.getConn(), Integer.parseInt(ident));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NumberFormatException a) {
+                    a.printStackTrace();
+                }
+                request.setAttribute("empl", empl);
+                request.getRequestDispatcher("employModif.jsp").forward(request, response);
                 break;
             }case "5": {
                 String ident = request.getParameter("ident");
                 try {
                     Employee empl = Employee.loadEmployeeById (DbUtil.getConn(), Integer.parseInt(ident));
                     request.setAttribute("empl", empl);
-                    request.getRequestDispatcher("employDeleteId.jsp").forward(request, response);
+                    request.getRequestDispatcher("employDelete.jsp").forward(request, response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }catch (NumberFormatException a) {
@@ -120,7 +136,7 @@ public class EmployeeControl extends HttpServlet {
                         workers = Employee.loadAllEmployees(con);
                         if (workers.size() != 0) {
                             request.setAttribute("empl", workers);
-                            request.getRequestDispatcher("showEmployees.jsp").forward(request, response);
+                            request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
                         } else {
                             response.getWriter().append("Nie ma nic do wyświetlenia");
                         }

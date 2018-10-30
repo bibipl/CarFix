@@ -14,7 +14,7 @@
 </head>
 <body>
 <%@ include file="header.jspf" %>
-<h1>Jestem w index.jsp</h1>
+
 <%@ include file="footer.jspf" %>
 
 </body>
