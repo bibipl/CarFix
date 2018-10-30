@@ -1,15 +1,14 @@
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%--
   Created by IntelliJ IDEA.
   User: bibipl
-  Date: 29.10.18
-  Time: 23:50
+  Date: 30.10.18
+  Time: 00:47
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>DELETE</title>
 </head>
 <body>
 <table>
@@ -22,7 +21,13 @@
     <tr><td>Uwagi :</td><td>${empl.note}</td></tr>
     <tr><td>Stawka godzinowa :</td><td>${empl.hourPrice}</td></tr>
 </table>
-<a href="EmployeeControl?opt=1">Powrót do listy pracowników</a>
+<h2> Na pewno chcesz usunąć tego pracownika z bazy danych ?</h2>
+<table>
+    <thead>
+    <td><a href="EmployeeControl?opt=6&ident=${empl.id}">TAK</a></td>
+    <td><a href="EmployeeControl?opt=1">NIE</a></td>
+    </thead>
+</table>
 
 </body>
 </html>
