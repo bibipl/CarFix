@@ -15,15 +15,13 @@ public class Order {
     Float valueParts;
     Float hourPrice;
     int numOfHours;
-    int carId;
-    int employeeId;
+
 
     public Order() {
     }
 
-    public Order(LocalDate planStartDate, LocalDate realStartDate, int employeeId, String problemDescript,
-                 String fixDescript, int status, int carId, Float valueServ, Float valueParts, Float hourPrice,
-                 int numOfHours, int carId1, int employeeId1) {
+    public Order(LocalDate planStartDate, LocalDate realStartDate, int employeeId, String problemDescript, String fixDescript, int status,
+                 int carId, Float valueServ, Float valueParts, Float hourPrice, int numOfHours) {
         this.planStartDate = planStartDate;
         this.realStartDate = realStartDate;
         this.employeeId = employeeId;
@@ -35,8 +33,6 @@ public class Order {
         this.valueParts = valueParts;
         this.hourPrice = hourPrice;
         this.numOfHours = numOfHours;
-        this.carId = carId1;
-        this.employeeId = employeeId1;
     }
 
     public int getId() {
