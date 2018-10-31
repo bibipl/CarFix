@@ -2,7 +2,6 @@ package pl.coderslab.controler;
 
 import pl.coderslab.model.Car;
 import pl.coderslab.dao.CarDao;
-import pl.coderslab.model.Client;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -150,5 +149,6 @@ public class CarControl extends HttpServlet {
             }
         }
     }
+
 //####################################################################################################################################
 }

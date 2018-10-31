@@ -1,6 +1,5 @@
 package pl.coderslab.dao;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import pl.coderslab.model.Order;
 import pl.coderslab.utils.DbUtil;
 
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class OrderDao {
 //######################################################################################################################################################
-//    DAO CCREATE/UPDATE - id==0 :CREATE; id !=0: UPDATE
+//    DAO CREATE/UPDATE - id==0 :CREATE; id !=0: UPDATE
 // SaveToDb - Static. IN object order. OUT -1 - error, otherwise id
 //######################################################################################################################################################
 
@@ -21,22 +20,25 @@ public class OrderDao {
         if (order.getId() == 0) {
             try {
                 Connection conn = DbUtil.getConn();
-                String sql = "INSERT INTO order(plan_start_date,real_start_date, employee_id,problem_descript," +
-                             "fix_descript,status,car_id,value_serv,value_parts,hour_price,num_of_hours) " +
-                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO repair(plan_start_date,real_start_date, employee_id,problem_descript,fix_descript,stat,car_id,value_serv,value_parts,hour_price,num_of_hours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 String[] generatedColumns = {"ID"};
                 PreparedStatement preparedStatement = conn.prepareStatement(sql, generatedColumns);
 
-                preparedStatement.setString(1, java.sql.Date.valueOf(order.getPlanStartDate()).toString());
-                preparedStatement.setString(2, java.sql.Date.valueOf(order.getRealStartDate()).toString());
+                if (order.getPlanStartDate() != null) preparedStatement.setString(1, java.sql.Date.valueOf(order.getPlanStartDate()).toString());
+                else preparedStatement.setString(1, null);
+                if (order.getRealStartDate() != null) preparedStatement.setString(2, java.sql.Date.valueOf(order.getRealStartDate()).toString());
+                else preparedStatement.setString(2, null);
                 preparedStatement.setInt(3, order.getEmployeeId());
                 preparedStatement.setString(4, order.getProblemDescript());
                 preparedStatement.setString(5, order.getFixDescript());
                 preparedStatement.setInt(6, order.getStatus());
                 preparedStatement.setInt(7, order.getCarId());
-                preparedStatement.setFloat(8, order.getValueServ());
-                preparedStatement.setFloat(9, order.getValueParts());
-                preparedStatement.setFloat(10, order.getHourPrice());
+                if (order.getValueServ() != null) preparedStatement.setFloat(8, order.getValueServ());
+                else preparedStatement.setFloat(8, 0);
+                if (order.getValueParts() != null)preparedStatement.setFloat(9, order.getValueParts());
+                else preparedStatement.setFloat(9, 0);
+                if (order.getHourPrice() != null)preparedStatement.setFloat(10, order.getHourPrice());
+                else preparedStatement.setFloat(10, 0);
                 preparedStatement.setInt(11, order.getNumOfHours());
                 preparedStatement.executeUpdate();
                 ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -48,8 +50,8 @@ public class OrderDao {
             }
         } else try {
             Connection conn = DbUtil.getConn();
-            String sql = "UPDATE car SET plan_start_date=?,real_start_date=?,employee_id=?,problem_descript=?,fix_descript=?," +
-                         "status=?,car_id=?,value_serv=?,value_parts=?,hour_price=?,num_of_hours=? WHERE id = ?";
+            String sql = "UPDATE repair SET plan_start_date=?,real_start_date=?,employee_id=?,problem_descript=?,fix_descript=?," +
+                         "stat=?,car_id=?,value_serv=?,value_parts=?,hour_price=?,num_of_hours=? WHERE id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, java.sql.Date.valueOf(order.getPlanStartDate()).toString());
             preparedStatement.setString(2, java.sql.Date.valueOf(order.getRealStartDate()).toString());
@@ -77,7 +79,7 @@ public class OrderDao {
 //######################################################################################################################################################
 
     public static Order loadOrderById(int id) {
-        String sql = "SELECT * FROM order where id=?";
+        String sql = "SELECT * FROM repair where id=?";
         Order loadedOrder = new Order();
         try {
             Connection conn = DbUtil.getConn();
@@ -100,7 +102,7 @@ public class OrderDao {
 
     public static List<Order> loadAllOrders() {
         ArrayList<Order> orders = new ArrayList<Order>();
-        String sql = "SELECT * FROM order";
+        String sql = "SELECT * FROM repair";
         try {
             Connection conn = DbUtil.getConn();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -121,7 +123,7 @@ public class OrderDao {
 
     public static boolean delete(Order order) {
         if (order.getId() != 0) {
-            String sql = "DELETE FROM order WHERE id=?";
+            String sql = "DELETE FROM repair WHERE id=?";
             try {
                 Connection conn = DbUtil.getConn();
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -142,7 +144,7 @@ public class OrderDao {
 
     public static List<Order> loadAllOrders_Car(int carId) {
         ArrayList<Order> orders = new ArrayList<Order>();
-        String sql = "SELECT * FROM order WHERE car_id=?";
+        String sql = "SELECT * FROM repair WHERE car_id=?";
         try {
             Connection conn = DbUtil.getConn();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -164,7 +166,7 @@ public class OrderDao {
 
     public static List<Order> loadAllOrders_Empl(int emplId) {
         ArrayList<Order> orders = new ArrayList<Order>();
-        String sql = "SELECT * FROM order WHERE employee__id=?";
+        String sql = "SELECT * FROM repair WHERE employee__id=?";
         try {
             Connection conn = DbUtil.getConn();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -188,12 +190,15 @@ public class OrderDao {
         Order loadedOrder = new Order();
         try {
             loadedOrder.setId(resultSet.getInt("id"));
-            loadedOrder.setPlanStartDate(resultSet.getDate("planStartDate").toLocalDate());
-            loadedOrder.setRealStartDate(resultSet.getDate("realStartDate").toLocalDate());
-            loadedOrder.setEmployeeId(resultSet.getInt("employeeId"));
-            loadedOrder.setProblemDescript(resultSet.getString("problemDescript"));
-            loadedOrder.setStatus(resultSet.getInt("status"));
-            loadedOrder.setCarId(resultSet.getInt("carId"));
+            loadedOrder.setPlanStartDate(resultSet.getDate("plan_start_date").toLocalDate());
+            if (resultSet.getDate("real_start_date") != null)
+                loadedOrder.setRealStartDate(resultSet.getDate("real_start_date").toLocalDate());
+            else loadedOrder.setRealStartDate (null);
+            loadedOrder.setEmployeeId(resultSet.getInt("employee_Id"));
+            loadedOrder.setProblemDescript(resultSet.getString("problem_descript"));
+            loadedOrder.setFixDescript(resultSet.getString("fix_descript"));
+            loadedOrder.setStatus(resultSet.getInt("stat"));
+            loadedOrder.setCarId(resultSet.getInt("car_id"));
             loadedOrder.setValueServ(resultSet.getFloat("value_serv"));
             loadedOrder.setValueParts(resultSet.getFloat("value_parts"));
             loadedOrder.setHourPrice(resultSet.getFloat("hour_price"));

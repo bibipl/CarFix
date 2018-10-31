@@ -24,6 +24,14 @@
     <input type="hidden" id="ownerId" name="ownerId" value=${clId}>
     <input type="submit" value="Dodaj"><br>
 </form>
+<table>
+    <thead>
+        <td><a href="CarControl?opt=1">| Powrót do listy samochodów | </a></td>
+        <td><a href="CarControl?opt=3&ident=${item.id}">Szczegóły | </a></td>
+        <td><a href="CarControl?opt=4&ident=${item.id}">Modyfikuj | </a></td>
+        <td><a href="CarControl?opt=5&ident=${item.id}">Usuń |</a></td>
+    </thead>
+</table>
 <%@ include file="footer.jspf" %>
 </body>
 </html>
