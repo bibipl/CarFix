@@ -40,7 +40,7 @@ public class CarDao {
             }
         } else try {
             Connection conn = DbUtil.getConn();
-            String sql = "UPDATE client SET model=?,brand=?,yearprod=?,registration=?,nextreview=?,owner_id=? WHERE id = ?";
+            String sql = "UPDATE car SET model=?,brand=?,yearprod=?,registration=?,nextreview=?,owner_id=? WHERE id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, car.getModel());
             preparedStatement.setString(2, car.getBrand());
@@ -106,7 +106,7 @@ public class CarDao {
 
     public static boolean delete(Car car) {
         if (car.getId() != 0) {
-            String sql = "DELETE FROM client WHERE id=?";
+            String sql = "DELETE FROM car WHERE id=?";
             try {
                 Connection conn = DbUtil.getConn();
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);

@@ -142,7 +142,7 @@ public class CarControl extends HttpServlet {
                     int ownId = Integer.parseInt(ident);
                     List<Car> cars = CarDao.loadAllCars_User(ownId);
                     request.setAttribute("cars", cars);
-                    request.getRequestDispatcher("carShowOwnAll.jsp").forward(request, response);
+                    request.getRequestDispatcher("carShowAll.jsp").forward(request, response);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
