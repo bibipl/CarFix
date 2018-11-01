@@ -53,19 +53,23 @@ public class OrderDao {
             String sql = "UPDATE repair SET plan_start_date=?,real_start_date=?,employee_id=?,problem_descript=?,fix_descript=?," +
                          "stat=?,car_id=?,value_serv=?,value_parts=?,hour_price=?,num_of_hours=? WHERE id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, java.sql.Date.valueOf(order.getPlanStartDate()).toString());
-            preparedStatement.setString(2, java.sql.Date.valueOf(order.getRealStartDate()).toString());
+            if (order.getPlanStartDate() != null) preparedStatement.setString(1, java.sql.Date.valueOf(order.getPlanStartDate()).toString());
+            else preparedStatement.setString(1, null);
+            if (order.getRealStartDate() != null) preparedStatement.setString(2, java.sql.Date.valueOf(order.getRealStartDate()).toString());
+            else preparedStatement.setString(2, null);
             preparedStatement.setInt(3, order.getEmployeeId());
             preparedStatement.setString(4, order.getProblemDescript());
             preparedStatement.setString(5, order.getFixDescript());
             preparedStatement.setInt(6, order.getStatus());
             preparedStatement.setInt(7, order.getCarId());
-            preparedStatement.setFloat(8, order.getValueServ());
-            preparedStatement.setFloat(9, order.getValueParts());
-            preparedStatement.setFloat(10, order.getHourPrice());
+            if (order.getValueServ() != null) preparedStatement.setFloat(8, order.getValueServ());
+            else preparedStatement.setFloat(8, 0);
+            if (order.getValueParts() != null)preparedStatement.setFloat(9, order.getValueParts());
+            else preparedStatement.setFloat(9, 0);
+            if (order.getHourPrice() != null)preparedStatement.setFloat(10, order.getHourPrice());
+            else preparedStatement.setFloat(10, 0);
             preparedStatement.setInt(11, order.getNumOfHours());
-            preparedStatement.setInt(12, order.getNumOfHours());
-            preparedStatement.executeUpdate();
+            preparedStatement.setInt(12, order.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             return -1;

@@ -40,11 +40,13 @@ public class OrderControl extends HttpServlet {
             if (request.getParameter("employeeId")!=null)
                 newOrder.setEmployeeId(Integer.parseInt(request.getParameter("employeeId")));
             newOrder.setProblemDescript(request.getParameter("problemDescript"));
+            newOrder.setFixDescript(request.getParameter("fixDescript"));
+
             if (request.getParameter("status")!=null)
                 newOrder.setStatus(Integer.parseInt(request.getParameter("status")));
             if (request.getParameter("carId")!=null)
                 newOrder.setCarId(Integer.parseInt(request.getParameter("carId")));
-
+String temp=request.getParameter("valueServ");///test
             if (request.getParameter("valueServ")!=null)
                 newOrder.setValueServ(Float.parseFloat(request.getParameter("valueServ")));
             if (request.getParameter("valueParts")!=null)

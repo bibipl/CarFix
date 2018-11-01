@@ -39,7 +39,7 @@
             <fmt:formatDate value="${parsedStartDate}" var="newParsedStartDate" type="date" pattern="dd.MM.yyyy" />
         </c:if>
         <c:if test="${not empty item.realStartDate}">
-            <fmt:parseDate value="${item.RealStartDate}" pattern="yyyy-MM-dd" var="parsedRealDate" type="date" />
+            <fmt:parseDate value="${item.realStartDate}" pattern="yyyy-MM-dd" var="parsedRealDate" type="date" />
             <fmt:formatDate value="${parsedRealDate}" var="newParsedRealDate" type="date" pattern="dd.MM.yyyy" />
         </c:if>
 
