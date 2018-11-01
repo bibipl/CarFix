@@ -133,7 +133,6 @@ public class CarDao {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, ownId);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) cars.add(uploadCar(resultSet));
 
         } catch (SQLException e) {

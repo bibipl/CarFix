@@ -14,7 +14,7 @@
 </head>
 <body>
 <%@ include file="header.jspf" %>
-<fmt:parseDate value="${item.birthDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
+<fmt:parseDate value="${cl.birthDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
 <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
 <form method="post" action="ClientControl">
     <input type="hidden" id="clId" name="clId" value="${cl.id}">
@@ -23,8 +23,12 @@
     <label>Data urodzenia</label><input type="date" name="birthDate" value="${cl.birthDate}"><br>
     <label>Nr telefonu</label><input type="text" name="phone" value="${cl.phone}"><br>
     <input type="submit" value="Modyfikuj"><br>
-    <a href="ClientControl?opt=1">Powrót do listy klientów</a>
 </form>
+<br>
+<table>
+    <th></th>
+    <tr><td><a href="ClientControl?opt=1">| Powrót do listy klientów |</a></td></tr>
+</table>
 <%@ include file="footer.jspf" %>
 </body>
 </html>

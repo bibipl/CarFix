@@ -13,16 +13,25 @@
 </head>
 <body>
 <%@ include file="header.jspf" %>
+<table>
+    <th></th>
+    <tr><td>ID : ${empl.id}</td></tr>
+</table>
 <form method="post" action="EmployeeControl">
-    <input type="hidden" id="emplId" name="emplId" value=${empl.id}>
-    <label>Imię</label><input type="text" name="name" value=${empl.name}><br>
-    <label>Nazwisko</label><input type="text" name="surname" value=${empl.surname}><br>
-    <label>Adres</label><input type="text" name="address" value=${empl.address}><br>
-    <label>Nr telefonu</label><input type="text" name="phone" value=${empl.phone}><br>
-    <label>Uwagi</label><input type="text" name="note" value=${empl.note}><br>
-    <label>Stawka godzinowa</label><input type="number" name="hourPrice" step="0.01" value=${empl.hourPrice}><br>
+    <input type="hidden" id="emplId" name="emplId" value="${empl.id}">
+    <label>Imię</label><input type="text" name="name" value="${empl.name}"><br>
+    <label>Nazwisko</label><input type="text" name="surname" value="${empl.surname}"><br>
+    <label>Adres</label><input type="text" name="address" value="${empl.address}"><br>
+    <label>Nr telefonu</label><input type="text" name="phone" value="${empl.phone}"><br>
+    <label>Uwagi</label><input type="text" name="note" value="${empl.note}"><br>
+    <label>Stawka godzinowa</label><input type="number" name="hourPrice" step="0.01" value="${empl.hourPrice}"><br>
     <input type="submit" value="Modyfikuj"><br>
 </form>
+<table>
+    <th></th>
+    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy pracowników</a></td></tr>
+</table>
+
 <%@ include file="footer.jspf" %>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package pl.coderslab.controler;
 
+import pl.coderslab.dao.EmployeeDao;
 import pl.coderslab.model.Client;
+import pl.coderslab.dao.ClientDao;
 import pl.coderslab.utils.DbUtil;
 
 import javax.servlet.ServletException;
@@ -26,35 +28,21 @@ public class ClientControl extends HttpServlet {
         } catch (NumberFormatException e) {
             cId=0;
         }
-        Client newClient = new Client();
+        Client newClient = ClientDao.loadClientById(cId); // or real or NULL
 
-        if (cId!=0) { // we want to modify and we need real id in newClient
-            try {
-                newClient = Client.loadClientById(DbUtil.getConn(), cId); // we want to get client with real id!=0
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
         newClient.setName(request.getParameter("name"));
         newClient.setSurname(request.getParameter("surname"));
-        newClient.setBirthDate(LocalDate.parse(request.getParameter("birthDate")));
+        newClient.setBirthDate(LocalDate.parse(request.getParameter("birthDate").toString()));
         newClient.setPhone(request.getParameter("phone"));
 
-        try {
-            newClient.saveToDB(DbUtil.getConn()); // if newClient.id=0 - new one if !=0 - old one to modify
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            List<Client> clients = Client.loadAllClients(DbUtil.getConn());
-            if (clients.size() != 0) {
-                request.setAttribute("cl", clients);
-                request.getRequestDispatcher("clientShowAll.jsp").forward(request, response);
-            } else {
-                response.getWriter().append("Nie ma nic do wyświetlenia");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ClientDao.saveToDB(newClient); // if newClient.id=0 - new one if !=0 - old one to modify
+
+        List<Client> cl = ClientDao.loadAllClients();
+        if (cl.size() != 0) {
+            request.setAttribute("cl", cl);
+            request.getRequestDispatcher("clientShowAll.jsp").forward(request, response);
+        } else {
+            response.getWriter().append("Nie ma nic do wyświetlenia");
         }
     }
 
@@ -63,14 +51,15 @@ public class ClientControl extends HttpServlet {
         String opt = request.getParameter("opt");
         switch (opt) {
             case "1": { // show all clients
-                List<Client> clients = new ArrayList<>();
-                try {
-                    clients = Client.loadAllClients(DbUtil.getConn());
-                    request.setAttribute("cl", clients);
+                List<Client> cl = new ArrayList<>();
+
+                cl = ClientDao.loadAllClients();
+                if (cl.size() != 0) {
+                    request.setAttribute("cl", cl);
                     request.getRequestDispatcher("clientShowAll.jsp").forward(request, response);
-               } catch (SQLException e) {
-                    e.printStackTrace();
-               }
+                } else {
+                    response.getWriter().append("Nie ma nic do wyświetlenia");
+                }
                 break;
             }
             case "2": { // add new client
@@ -81,11 +70,9 @@ public class ClientControl extends HttpServlet {
                 String ident = request.getParameter("ident");
                 Client cl =new Client();
                 try {
-                    cl = Client.loadClientById (DbUtil.getConn(), Integer.parseInt(ident));
-                } catch (SQLException e) {
+                    cl = ClientDao.loadClientById (Integer.parseInt(ident));
+                } catch (NumberFormatException e) {
                     e.printStackTrace();
-                } catch (NumberFormatException a) {
-                    a.printStackTrace();
                 }
                 request.setAttribute("cl", cl);
                 request.getRequestDispatcher("clientShowById.jsp").forward(request, response);
@@ -95,11 +82,9 @@ public class ClientControl extends HttpServlet {
                 String ident = request.getParameter("ident");
                 Client cl =new Client();
                 try {
-                    cl = Client.loadClientById (DbUtil.getConn(), Integer.parseInt(ident));
-                } catch (SQLException e) {
+                    cl = ClientDao.loadClientById (Integer.parseInt(ident));
+                } catch (NumberFormatException e) {
                     e.printStackTrace();
-                } catch (NumberFormatException a) {
-                    a.printStackTrace();
                 }
                 request.setAttribute("cl", cl);
                 request.getRequestDispatcher("clientModif.jsp").forward(request, response);
@@ -107,27 +92,22 @@ public class ClientControl extends HttpServlet {
             }case "5": {
                 String ident = request.getParameter("ident");
                 try {
-                    Client cl = Client.loadClientById (DbUtil.getConn(), Integer.parseInt(ident));
+                    Client cl = ClientDao.loadClientById (Integer.parseInt(ident));
                     request.setAttribute("cl", cl);
                     request.getRequestDispatcher("clientDelete.jsp").forward(request, response);
-                } catch (SQLException e) {
+                }catch (NumberFormatException e) {
                     e.printStackTrace();
-                }catch (NumberFormatException a) {
-                    a.printStackTrace();
                 }
                 break;
             }case "6": {
                 String ident = request.getParameter("ident");
                 try {
-                    Connection con = DbUtil.getConn();
-                    Client cl = Client.loadClientById (con, Integer.parseInt(ident));
-                    cl.delete(con);
+                    Client cl = ClientDao.loadClientById (Integer.parseInt(ident));
+                    ClientDao.delete(cl);
                     List<Client> clients = new ArrayList<>();
-                    clients = Client.loadAllClients(con);
+                    clients = ClientDao.loadAllClients();
                         request.setAttribute("cl", clients);
                         request.getRequestDispatcher("clientShowAll.jsp").forward(request, response);
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }catch (NumberFormatException e) {
                     e.printStackTrace();
                 }

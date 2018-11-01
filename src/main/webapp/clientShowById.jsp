@@ -24,15 +24,28 @@
     <tr><td>Data urodzin: </td><td>${newParsedDate}</td></tr>
     <tr><td>Telefon: </td><td>${cl.phone}</td></tr>
 </table>
+<br>
+<table>
+    <th></th>
+    <tr>
+        <td><a href="ClientControl?opt=4&ident=${cl.id}">Modyfikuj Klienta| </a></td>
+        <td><a href="ClientControl?opt=5&ident=${cl.id}">Usuń Klienta|</a></td>
+    </tr>
+</table>
+<br>
 <table>
     <thead></thead>
     <tr>
         <td> <a href="CarControl?opt=2&ident=${cl.id}">Dodaj Samochód | </a>  </td>
         <td> <a href="ClientControl?opt=1">Lista zleceń | </a>  </td>
         <td> <a href="CarControl?opt=7&ident=${cl.id}">Lista samochodów | </a></td>
-        <td> <a href="ClientControl?opt=1">Powrót do listy klientów | </a>  </td>
-    </tr>
 
+    </tr>
+</table>
+<br>
+<table>
+    <th></th>
+    <tr><td><a href="ClientControl?opt=1">| Powrót do listy klientów |</a></td></tr>
 </table>
 
 <%@ include file="footer.jspf" %>

@@ -2,6 +2,7 @@ package pl.coderslab.controler;
 
 
 import pl.coderslab.model.Employee;
+import pl.coderslab.dao.EmployeeDao;
 import pl.coderslab.utils.DbUtil;
 
 import javax.servlet.ServletException;
@@ -20,47 +21,34 @@ public class EmployeeControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=utf-8");
         String emplId = request.getParameter("emplId");
-        int eId=0;
+        int eId=0;  // we asume - does not exist (create)
         try {
-            eId = Integer.parseInt(emplId);
+            eId = Integer.parseInt(emplId); // unless it exists (update)
         } catch (NumberFormatException e) {
            eId=0;
         }
-        Employee newEmployee = new Employee();
+        Employee newEmployee = EmployeeDao.loadEmployeeById(eId); // or real or NULL
 
-        if (eId!=0) { // we want to modify and we need real id in newEmployee
-            try {
-                newEmployee = Employee.loadEmployeeById(DbUtil.getConn(), eId); // we want to get employee with real id!=0
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        newEmployee.setName(request.getParameter("name"));
-        newEmployee.setSurname(request.getParameter("surname"));
-        newEmployee.setAddress(request.getParameter("address"));
-        newEmployee.setPhone(request.getParameter("phone"));
-        newEmployee.setNote(request.getParameter("note"));
+         newEmployee.setName(request.getParameter("name"));
+         newEmployee.setSurname(request.getParameter("surname"));
+         newEmployee.setAddress(request.getParameter("address"));
+         newEmployee.setPhone(request.getParameter("phone"));
+         newEmployee.setNote(request.getParameter("note"));
+
         try {
             Float pricePerHour = Float.parseFloat(request.getParameter("hourPrice"));
             newEmployee.setHourPrice(pricePerHour);
         } catch (NumberFormatException e) {
             newEmployee.setHourPrice(0); // jeśli zły format to zero!
         }
-        try {
-            newEmployee.saveToDB(DbUtil.getConn()); // id newEmployee.id=0 - new one if !=0 - old one to modify
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            List<Employee> workers = Employee.loadAllEmployees(DbUtil.getConn());
-            if (workers.size() != 0) {
-                request.setAttribute("empl", workers);
-                request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
-            } else {
-                response.getWriter().append("Nie ma nic do wyświetlenia");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        EmployeeDao.saveToDB(newEmployee); // if newEmployee.id=0 - new one if !=0 - old one to modify
+        List<Employee> workers = EmployeeDao.loadAllEmployees();
+        if (workers.size() != 0) {
+            request.setAttribute("empl", workers);
+            request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
+        } else {
+            response.getWriter().append("Nie ma nic do wyświetlenia");
         }
     }
 
@@ -70,17 +58,15 @@ public class EmployeeControl extends HttpServlet {
         switch (opt) {
             case "1": { // show all employees
                 List<Employee> workers = new ArrayList<>();
-                try {
-                    workers = Employee.loadAllEmployees(DbUtil.getConn());
+
+                    workers = EmployeeDao.loadAllEmployees();
                     if (workers.size() != 0) {
                         request.setAttribute("empl", workers);
                         request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
                     } else {
                         response.getWriter().append("Nie ma nic do wyświetlenia");
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+
                 break;
             }
             case "2": { // add new employee
@@ -91,9 +77,7 @@ public class EmployeeControl extends HttpServlet {
                 String ident = request.getParameter("ident");
                 Employee empl =new Employee();
                 try {
-                    empl = Employee.loadEmployeeById (DbUtil.getConn(), Integer.parseInt(ident));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    empl = EmployeeDao.loadEmployeeById (Integer.parseInt(ident));
                 } catch (NumberFormatException a) {
                     a.printStackTrace();
                 }
@@ -105,9 +89,7 @@ public class EmployeeControl extends HttpServlet {
                 String ident = request.getParameter("ident");
                 Employee empl =new Employee();
                 try {
-                    empl = Employee.loadEmployeeById (DbUtil.getConn(), Integer.parseInt(ident));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    empl = EmployeeDao.loadEmployeeById (Integer.parseInt(ident));
                 } catch (NumberFormatException a) {
                     a.printStackTrace();
                 }
@@ -117,11 +99,9 @@ public class EmployeeControl extends HttpServlet {
             }case "5": {
                 String ident = request.getParameter("ident");
                 try {
-                    Employee empl = Employee.loadEmployeeById (DbUtil.getConn(), Integer.parseInt(ident));
+                    Employee empl = EmployeeDao.loadEmployeeById (Integer.parseInt(ident));
                     request.setAttribute("empl", empl);
                     request.getRequestDispatcher("employDelete.jsp").forward(request, response);
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }catch (NumberFormatException a) {
                     a.printStackTrace();
                 }
@@ -129,19 +109,16 @@ public class EmployeeControl extends HttpServlet {
             }case "6": {
                 String ident = request.getParameter("ident");
                 try {
-                    Connection con = DbUtil.getConn();
-                    Employee empl = Employee.loadEmployeeById (con, Integer.parseInt(ident));
-                    empl.delete(con);
+                    Employee empl = EmployeeDao.loadEmployeeById (Integer.parseInt(ident));
+                    EmployeeDao.delete(empl);
                     List<Employee> workers = new ArrayList<>();
-                        workers = Employee.loadAllEmployees(con);
+                        workers = EmployeeDao.loadAllEmployees();
                         if (workers.size() != 0) {
                             request.setAttribute("empl", workers);
                             request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
                         } else {
                             response.getWriter().append("Nie ma nic do wyświetlenia");
                         }
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }catch (NumberFormatException e) {
                     e.printStackTrace();
                 }

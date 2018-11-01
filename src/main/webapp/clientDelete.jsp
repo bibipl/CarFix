@@ -24,7 +24,7 @@
     <tr><td>Data Urodzenia: </td><td>${newParsedDate}</td></tr>
     <tr><td>Telefon: </td><td>${cl.phone}</td></tr>
 </table>
-<h4> Na pewno chcesz usunąć tego pracownika z bazy danych ?</h4>
+<h4> Na pewno chcesz usunąć tego klienta z bazy danych ?</h4>
 <h4> Usunięcie będzie możliwe, jeżeli nie posiada on żadnego samochodu ?</h4>
 <h4> Jeżeli posiada to najpierw usuń lub zmień przynależność smochodów tego klienta</h4>
 <table>
@@ -32,6 +32,11 @@
     <td><a href="ClientControl?opt=6&ident=${cl.id}">TAK</a></td>
     <td><a href="ClientControl?opt=1">NIE</a></td>
     </thead>
+</table>
+<br>
+<table>
+    <th></th>
+    <tr><td><a href="ClientControl?opt=1">| Powrót do listy klientów |</a></td></tr>
 </table>
 <%@ include file="footer.jspf" %>
 </body>

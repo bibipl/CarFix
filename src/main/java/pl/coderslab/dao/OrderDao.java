@@ -147,20 +147,9 @@ public class OrderDao {
 //######################################################################################################################################################
 
     public static List<Order> loadAllOrders_Car(int carId) {
-        ArrayList<Order> orders = new ArrayList<Order>();
         String sql = "SELECT * FROM repair WHERE car_id=?";
-        try {
-            Connection conn = DbUtil.getConn();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, carId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) orders.add(uploadOrder(resultSet));
-
-        } catch (SQLException e) {
-            return null;
-        }
-        return orders;
+        askSQL(carId, sql);
+        return askSQL(carId, sql);
     }
 
 //######################################################################################################################################################
@@ -169,26 +158,40 @@ public class OrderDao {
 //######################################################################################################################################################
 
     public static List<Order> loadAllOrders_Empl(int emplId) {
-        ArrayList<Order> orders = new ArrayList<Order>();
         String sql = "SELECT * FROM repair WHERE employee__id=?";
+        askSQL(emplId, sql);
+        return askSQL(emplId, sql);
+    }
+
+//######################################################################################################################################################
+    // DAO ask SQL - extractet to ask sql question "sql" with "id" parameter and return list of matching "Order"
+    // Returns list of matching objects "ORDER"
+//######################################################################################################################################################
+
+    private static List<Order> askSQL(int id, String sql) {
+        List<Order> ordersRead = new ArrayList<Order>();
         try {
             Connection conn = DbUtil.getConn();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, emplId);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) orders.add(uploadOrder(resultSet));
+            while (resultSet.next()) ordersRead.add(uploadOrder(resultSet));
 
         } catch (SQLException e) {
             return null;
         }
-        return orders;
+        return ordersRead;
     }
 
 //######################################################################################################################################################
     // loads Object CAR with data from resultSet
     // returns O CAR or null id SQR exception occurs;
 //######################################################################################################################################################
+
+
+
+
+
 
     private static Order uploadOrder (ResultSet resultSet) {
         Order loadedOrder = new Order();

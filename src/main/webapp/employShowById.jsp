@@ -24,7 +24,11 @@
     <tr><td>Uwagi :</td><td>${empl.note}</td></tr>
     <tr><td>Stawka godzinowa :</td><td>${empl.hourPrice}</td></tr>
 </table>
-<a href="EmployeeControl?opt=1">Powrót do listy pracowników</a>
+<br>
+<table>
+    <th></th>
+    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy pracowników</a></td></tr>
+</table>
 <%@ include file="footer.jspf" %>
 </body>
 </html>

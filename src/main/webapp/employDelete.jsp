@@ -25,9 +25,16 @@
 <h2> Na pewno chcesz usunąć tego pracownika z bazy danych ?</h2>
 <table>
     <thead>
-    <td><a href="EmployeeControl?opt=6&ident=${empl.id}">TAK</a></td>
-    <td><a href="EmployeeControl?opt=1">NIE</a></td>
+    <tr>
+        <td><a href="EmployeeControl?opt=6&ident=${empl.id}">TAK</a></td>
+        <td><a href="EmployeeControl?opt=1">NIE</a></td>
+    </tr>
     </thead>
+</table>
+<br>
+<table>
+    <th></th>
+    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy pracowników</a></td></tr>
 </table>
 <%@ include file="footer.jspf" %>
 </body>
