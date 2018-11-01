@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <table class="table">
     <thead>
     <tr>
@@ -25,7 +25,8 @@
         <th scope="col">birthday</th>
         <th scope="col">phone</th>
 
-        <th scope="col">Szczegóły - samochody</th>
+        <th scope="col">Szczegóły</th>
+        <th scope="col">Samochody</th>
         <th scope="col">Modyfikuj dane Klienta</th>
         <th scope="col">Usuń Klienta</th>
     </tr>
@@ -40,12 +41,13 @@
             <td>${newParsedDate}</td>
             <td>${item.phone}</td>
             <td><a href="ClientControl?opt=3&ident=${item.id}">Szczegóły</a></td>
+            <td><a href="ClientControl?opt=7&ident=${item.id}">Samochody</a></td>
             <td><a href="ClientControl?opt=4&ident=${item.id}">Modyfikuj</a></td>
             <td><a href="ClientControl?opt=5&ident=${item.id}">Usuń</a></td>
         </tr>
     </c:forEach>
 
 </table>
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

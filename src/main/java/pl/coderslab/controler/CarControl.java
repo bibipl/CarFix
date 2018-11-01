@@ -1,7 +1,9 @@
 package pl.coderslab.controler;
 
+import pl.coderslab.dao.ClientDao;
 import pl.coderslab.model.Car;
 import pl.coderslab.dao.CarDao;
+import pl.coderslab.model.Client;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "CarControl", urlPatterns = "/CarControl")
@@ -22,12 +25,20 @@ public class CarControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=utf-8");
         String carId = request.getParameter("carId");
+        String ownerId = request.getParameter("ownerId");
         int cId;
+        int oId;
         try {
             cId = Integer.parseInt(carId);
         } catch (NumberFormatException e) {
             cId=0;
         }
+        try {
+            oId = Integer.parseInt(ownerId);
+        } catch (NumberFormatException e) {
+            oId=0;
+        }
+
         Car newCar= new Car(); // new car is empty (ADD)
         if (cId!=0) { // MODIFY
             newCar = CarDao.loadCarById(cId); // new car is ready to (MODIFY)
@@ -44,12 +55,17 @@ public class CarControl extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
         CarDao.saveToDB(newCar); // PUT NEW OR MODIFIED to MYSQL
-
-        List<Car> cars = CarDao.loadAllCars();
+        List<Car> cars = new ArrayList<>();
+        if (oId == 0) {
+            cars = CarDao.loadAllCars();
+        } else {
+            cars = CarDao.loadAllCars_User(oId);
+        }
+        Client cl = ClientDao.loadClientById(oId);
         request.setAttribute("cars", cars);
-        request.getRequestDispatcher("carShowAll.jsp").forward(request, response);
+        request.setAttribute("cl", cl);
+        request.getRequestDispatcher("cars/carShowByClient.jsp").forward(request, response);
     }
 
 //####################################################################################################################################
@@ -64,24 +80,33 @@ public class CarControl extends HttpServlet {
             case "1": { // SHOW ALL CARS
                 List<Car> cars = CarDao.loadAllCars();
                 request.setAttribute("cars", cars);
-                request.getRequestDispatcher("carShowAll.jsp").forward(request, response);
+                request.getRequestDispatcher("cars/carShowAll.jsp").forward(request, response);
                 break;
             }
             case "2": { // ADD CAR
                 String ident = request.getParameter("ident");
-                int clId=0;
+                int clId;
+                int carId=0;
                 try {
                     clId = Integer.parseInt(ident);
                 } catch (NumberFormatException e) {
-                    e.printStackTrace();
+                    clId=0;
                 }
                 if (clId!=0) {
-                    request.setAttribute("clId", clId);
-                    request.getRequestDispatcher("carAdd.jsp").forward(request, response);
+                    Client cl = ClientDao.loadClientById(clId);
+                    request.setAttribute("carId", carId);
+                    request.setAttribute("cl", cl);
+                    request.getRequestDispatcher("cars/carAdd.jsp").forward(request, response);
+                }
+//                List<Car> cars = CarDao.loadAllCars();
+//                request.setAttribute("cars", cars);
+//                jeśli client id=0 to wyświetl listę klientów, żeby tam dodać samochód.
+                List<Client> cl = ClientDao.loadAllClients();
+                if (cl.size() != 0) {
+                    request.setAttribute("cl", cl);
+                    request.getRequestDispatcher("clients/clientShowAll.jsp").forward(request, response);
                 } else {
-                    List<Car> cars = CarDao.loadAllCars();
-                    request.setAttribute("cars", cars);
-                    request.getRequestDispatcher("carShowAll.jsp").forward(request, response);
+                    response.getWriter().append("Nie ma nic do wyświetlenia");
                 }
                 break;
             }
@@ -95,7 +120,7 @@ public class CarControl extends HttpServlet {
                     a.printStackTrace();
                 }
                 request.setAttribute("cars", car);
-                request.getRequestDispatcher("carShowById.jsp").forward(request, response);
+                request.getRequestDispatcher("cars/carShowById.jsp").forward(request, response);
                 break;
             }
             case "4": { // MODIFY CAR
@@ -108,7 +133,7 @@ public class CarControl extends HttpServlet {
                     a.printStackTrace();
                 }
                 request.setAttribute("cars", car);
-                request.getRequestDispatcher("carModif.jsp").forward(request, response);
+                request.getRequestDispatcher("cars/carModif.jsp").forward(request, response);
                 break;
             }case "5": { // DELETE1 - SHOW AND ASK
                 String ident = request.getParameter("ident");
@@ -116,7 +141,7 @@ public class CarControl extends HttpServlet {
                     int carId = Integer.parseInt(ident);
                     Car car = CarDao.loadCarById (carId);
                     request.setAttribute("cars", car);
-                    request.getRequestDispatcher("carDelete.jsp").forward(request, response);
+                    request.getRequestDispatcher("cars/carDelete.jsp").forward(request, response);
                 }catch (NumberFormatException a) {
                     a.printStackTrace();
                 }
@@ -130,7 +155,7 @@ public class CarControl extends HttpServlet {
                     List<Car> cars = CarDao.loadAllCars();
                     request.setAttribute("cars", cars);
                     request.setAttribute("deleted", deleted);// if false we will display "could not remove"
-                                        request.getRequestDispatcher("carShowAll.jsp").forward(request, response);
+                                        request.getRequestDispatcher("cars/carShowAll.jsp").forward(request, response);
                 }catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
@@ -141,12 +166,13 @@ public class CarControl extends HttpServlet {
                     int ownId = Integer.parseInt(ident);
                     List<Car> cars = CarDao.loadAllCars_User(ownId);
                     request.setAttribute("cars", cars);
-                    request.getRequestDispatcher("carShowAll.jsp").forward(request, response);
+                    request.getRequestDispatcher("cars/carShowAll.jsp").forward(request, response);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
                 break;
             }
+
         }
     }
 

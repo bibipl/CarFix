@@ -17,7 +17,7 @@
 
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <table class="table">
     <thead>
     <tr>
@@ -59,7 +59,23 @@
             <c:if test="${empty item.realStartDate}">
                 <td>Brak</td>
             </c:if>
-            <td>${item.status}</td>
+        <c:choose>
+            <c:when test="${item.status==1}">
+                <td>| Przyjęty |</td>
+            </c:when>
+            <c:when test="${item.status==2}">
+                <td>| Zatwierdzony |</td>
+            </c:when>
+            <c:when test="${item.status==3}">
+                <td>| Naprawiany |</td>
+            </c:when>
+            <c:when test="${item.status==4}">
+                <td>| Gotowy |</td>
+            </c:when>
+            <c:otherwise>
+                <td>| Rezygnacja |</td>
+            </c:otherwise>
+        </c:choose>
             <td><a href="OrderControl?opt=3&ident=${item.id}">Szczegóły</a></td>
             <td><a href="OrderControl?opt=4&ident=${item.id}">Modyfikuj</a></td>
             <td><a href="OrderControl?opt=5&ident=${item.id}">Usuń</a></td>
@@ -68,7 +84,7 @@
 
 </table>
 
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>--%>
 <%--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>--%>

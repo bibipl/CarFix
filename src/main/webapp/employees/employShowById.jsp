@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <table>
     <thead></thead>
     <tr><td>Numer :</td><td>${empl.id}</td></tr>
@@ -29,6 +29,6 @@
     <th></th>
     <tr><td><a href="EmployeeControl?opt=1">Powrót do listy pracowników</a></td></tr>
 </table>
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

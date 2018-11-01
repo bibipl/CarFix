@@ -1,9 +1,9 @@
 package pl.coderslab.controler;
 
-import pl.coderslab.dao.EmployeeDao;
 import pl.coderslab.model.Client;
 import pl.coderslab.dao.ClientDao;
-import pl.coderslab.utils.DbUtil;
+import pl.coderslab.model.Car;
+import pl.coderslab.dao.CarDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,7 +40,7 @@ public class ClientControl extends HttpServlet {
         List<Client> cl = ClientDao.loadAllClients();
         if (cl.size() != 0) {
             request.setAttribute("cl", cl);
-            request.getRequestDispatcher("clientShowAll.jsp").forward(request, response);
+            request.getRequestDispatcher("clients/clientShowAll.jsp").forward(request, response);
         } else {
             response.getWriter().append("Nie ma nic do wyświetlenia");
         }
@@ -51,19 +51,17 @@ public class ClientControl extends HttpServlet {
         String opt = request.getParameter("opt");
         switch (opt) {
             case "1": { // show all clients
-                List<Client> cl = new ArrayList<>();
-
-                cl = ClientDao.loadAllClients();
+                List<Client> cl = ClientDao.loadAllClients();
                 if (cl.size() != 0) {
                     request.setAttribute("cl", cl);
-                    request.getRequestDispatcher("clientShowAll.jsp").forward(request, response);
+                    request.getRequestDispatcher("clients/clientShowAll.jsp").forward(request, response);
                 } else {
                     response.getWriter().append("Nie ma nic do wyświetlenia");
                 }
                 break;
             }
             case "2": { // add new client
-                request.getRequestDispatcher("clientAdd.jsp").forward(request, response);
+                request.getRequestDispatcher("clients/clientAdd.jsp").forward(request, response);
                 break;
             }
             case "3": { // show details by id
@@ -75,7 +73,7 @@ public class ClientControl extends HttpServlet {
                     e.printStackTrace();
                 }
                 request.setAttribute("cl", cl);
-                request.getRequestDispatcher("clientShowById.jsp").forward(request, response);
+                request.getRequestDispatcher("clients/clientShowById.jsp").forward(request, response);
                 break;
             }
             case "4": {
@@ -87,19 +85,19 @@ public class ClientControl extends HttpServlet {
                     e.printStackTrace();
                 }
                 request.setAttribute("cl", cl);
-                request.getRequestDispatcher("clientModif.jsp").forward(request, response);
+                request.getRequestDispatcher("clients/clientModif.jsp").forward(request, response);
                 break;
             }case "5": {
                 String ident = request.getParameter("ident");
                 try {
                     Client cl = ClientDao.loadClientById (Integer.parseInt(ident));
                     request.setAttribute("cl", cl);
-                    request.getRequestDispatcher("clientDelete.jsp").forward(request, response);
+                    request.getRequestDispatcher("clients/clientDelete.jsp").forward(request, response);
                 }catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
                 break;
-            }case "6": {
+            }case "6": { // DELETE Client
                 String ident = request.getParameter("ident");
                 try {
                     Client cl = ClientDao.loadClientById (Integer.parseInt(ident));
@@ -107,7 +105,19 @@ public class ClientControl extends HttpServlet {
                     List<Client> clients = new ArrayList<>();
                     clients = ClientDao.loadAllClients();
                         request.setAttribute("cl", clients);
-                        request.getRequestDispatcher("clientShowAll.jsp").forward(request, response);
+                        request.getRequestDispatcher("clients/clientShowAll.jsp").forward(request, response);
+                }catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }case "7": {// Show CLIENTS Cars
+                String ident = request.getParameter("ident");
+                try {
+                    List<Car> cars = CarDao.loadAllCars_User(Integer.parseInt(ident));
+                    Client cl = ClientDao.loadClientById(Integer.parseInt(ident));
+                    request.setAttribute("cl", cl);
+                    request.setAttribute("cars", cars);
+                    request.getRequestDispatcher("cars/carShowByClient.jsp").forward(request, response);
                 }catch (NumberFormatException e) {
                     e.printStackTrace();
                 }

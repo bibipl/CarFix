@@ -13,7 +13,7 @@
     <title>Modyfikuj dane samochodu</title>
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <fmt:parseDate value="${cars.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
 <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
 <form method="post" action="CarControl">
@@ -37,6 +37,6 @@
 
 
 
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

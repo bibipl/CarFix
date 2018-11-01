@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <table class="table">
     <tr><td><a href="EmployeeControl?opt=2">Dodaj Pracownika</a></td></tr>
     <thead>
@@ -24,8 +24,9 @@
         <th scope="col">name</th>
         <th scope="col">surname</th>
         <th scope="col">per hour</th>
-        <th scope="col">Szczegóły pracownika</th>
-        <th scope="col">Modyfikuj dane pracownika</th>
+        <th scope="col">Zlecenia</th>
+        <th scope="col">Dane</th>
+        <th scope="col">Modyfikuj</th>
         <th scope="col">Usuń pracownika</th>
 
     </tr>
@@ -36,7 +37,8 @@
             <td>${item.name}</td>
             <td>${item.surname}</td>
             <td>${item.hourPrice}</td>
-            <td><a href="EmployeeControl?opt=3&ident=${item.id}">Szczegóły</a></td>
+            <td><a href="EmployeeControl?opt=7&ident=${item.id}">Zlecenia</a></td>
+            <td><a href="EmployeeControl?opt=3&ident=${item.id}">Dane</a></td>
             <td><a href="EmployeeControl?opt=4&ident=${item.id}">Modyfikuj</a></td>
             <td><a href="EmployeeControl?opt=5&ident=${item.id}">Usuń</a></td>
         </tr>
@@ -47,7 +49,7 @@
     <th></th>
     <tr><td><a href="EmployeeControl?opt=1">Lista wszystkich pracowników</a></td></tr>
 </table>
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>--%>
 <%--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>--%>

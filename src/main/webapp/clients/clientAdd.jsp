@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <form method="post" action="ClientControl">
     <input type="hidden" id="empId" name="empId" value=${empl.id}>
     <label>Imię</label><input type="text" name="name"><br>
@@ -20,6 +20,6 @@
     <label>Nr telefonu</label><input type="text" name="phone"><br>
     <input type="submit" value="Dodaj"><br>
 </form>
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

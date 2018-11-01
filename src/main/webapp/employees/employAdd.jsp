@@ -11,7 +11,7 @@
     <title>Add Employee</title>
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <form method="post" action="EmployeeControl">
     <input type="hidden" id="empId" name="empId" value=${empl.id}>
     <label>Imię</label><input type="text" name="name"><br>
@@ -22,6 +22,6 @@
     <label>Stawka godzinowa</label><input type="number" name="hourPrice" step="0.01"><br>
     <input type="submit" value="Dodaj"><br>
 </form>
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

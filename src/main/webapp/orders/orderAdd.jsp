@@ -13,13 +13,21 @@
     <title>Dodaj Zlecenie</title>
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <form method="post" action="OrderControl">
     <input type="hidden" name="ordId" value=${0}>
     <label>Identyfikator samochodu</label><input type="number" name="carId"><br>
     <label>Opis Problemu</label><input type="text" name="problemDescript"><br>
     <label>Planowane rozpoczęcie naprawy</label><input type="date" name="planStartDate"><br>
     <label>Pracownik</label><input type="number" name="employeeId"><br>
+    <label for="status">Status</label>
+    <select id="status" name="status" value="1">
+        <option selected value="1">Przyjęty</option>
+        <option value="2">Zatwierdzony koszt naprawy</option>
+        <option value="3">W naprawie</option>
+        <option value="4">Gotowy</option>
+        <option value="5">Rezygnacja</option>
+    </select>
     <input type="submit" value="Dodaj"><br>
 </form>
 <table>
@@ -30,6 +38,6 @@
     <td><a href="OrderControl?opt=5&ident=${item.id}">Usuń |</a></td>
     </thead>
 </table>
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

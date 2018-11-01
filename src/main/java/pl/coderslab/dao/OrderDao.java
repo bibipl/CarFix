@@ -39,7 +39,8 @@ public class OrderDao {
                 else preparedStatement.setFloat(9, 0);
                 if (order.getHourPrice() != null)preparedStatement.setFloat(10, order.getHourPrice());
                 else preparedStatement.setFloat(10, 0);
-                preparedStatement.setInt(11, order.getNumOfHours());
+                if (order.getNumOfHours() != null)preparedStatement.setFloat(11, order.getNumOfHours());
+                else preparedStatement.setFloat(11, 0);
                 preparedStatement.executeUpdate();
                 ResultSet rs = preparedStatement.getGeneratedKeys();
                 if (rs.next()) {
@@ -68,7 +69,8 @@ public class OrderDao {
             else preparedStatement.setFloat(9, 0);
             if (order.getHourPrice() != null)preparedStatement.setFloat(10, order.getHourPrice());
             else preparedStatement.setFloat(10, 0);
-            preparedStatement.setInt(11, order.getNumOfHours());
+            if (order.getNumOfHours() != null)preparedStatement.setFloat(11, order.getNumOfHours());
+            else preparedStatement.setFloat(11, 0);
             preparedStatement.setInt(12, order.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -158,8 +160,7 @@ public class OrderDao {
 //######################################################################################################################################################
 
     public static List<Order> loadAllOrders_Empl(int emplId) {
-        String sql = "SELECT * FROM repair WHERE employee__id=?";
-        askSQL(emplId, sql);
+        String sql = "SELECT * FROM repair WHERE employee_id=?";
         return askSQL(emplId, sql);
     }
 
@@ -188,11 +189,6 @@ public class OrderDao {
     // returns O CAR or null id SQR exception occurs;
 //######################################################################################################################################################
 
-
-
-
-
-
     private static Order uploadOrder (ResultSet resultSet) {
         Order loadedOrder = new Order();
         try {
@@ -209,7 +205,7 @@ public class OrderDao {
             loadedOrder.setValueServ(resultSet.getFloat("value_serv"));
             loadedOrder.setValueParts(resultSet.getFloat("value_parts"));
             loadedOrder.setHourPrice(resultSet.getFloat("hour_price"));
-            loadedOrder.setNumOfHours(resultSet.getInt("num_of_hours"));
+            loadedOrder.setNumOfHours(resultSet.getFloat("num_of_hours"));
         } catch (SQLException e) {
             return null;
         }

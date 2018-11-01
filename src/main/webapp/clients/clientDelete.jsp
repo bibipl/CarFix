@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 <fmt:parseDate value="${cl.birthDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
 <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
 <table>
@@ -38,6 +38,6 @@
     <th></th>
     <tr><td><a href="ClientControl?opt=1">| Powrót do listy klientów |</a></td></tr>
 </table>
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

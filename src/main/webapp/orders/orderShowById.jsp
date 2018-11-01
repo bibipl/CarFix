@@ -10,10 +10,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Usuwanie Zlecenia</title>
+    <title>Szczegóły zlecenia</title>
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
 
 <c:if test="${not empty orders.planStartDate}">
     <fmt:parseDate value="${orders.planStartDate}" pattern="yyyy-MM-dd" var="parsedStartDate" type="date" />
@@ -27,7 +27,23 @@
     <tr><td>ID</td><td>${orders.id}</td></tr>
     <tr><td>Samochód</td><td>${orders.carId}</td></tr>
     <tr><td>Pracownik</td><td>${orders.employeeId}</td></tr>
-    <tr><td>Status naprawy</td><td>${orders.status}</td></tr>
+    <c:choose>
+        <c:when test="${orders.status==1}">
+            <tr><td>Status naprawy</td><td>| Przyjęty |</td></tr>
+        </c:when>
+        <c:when test="${orders.status==2}">
+            <tr><td>Status naprawy</td><td>| Zatwierdzony |</td></tr>
+        </c:when>
+        <c:when test="${orders.status==3}">
+            <tr><td>Status naprawy</td><td>| Naprawiany |</td></tr>
+        </c:when>
+        <c:when test="${orders.status==4}">
+            <tr><td>Status naprawy</td><td>| Gotowy |</td></tr>
+        </c:when>
+        <c:otherwise>
+            <tr><td>Status naprawy</td><td>| Rezygnacja |</td></tr>
+        </c:otherwise>
+    </c:choose>
     <tr><td>Opis problemu</td><td>${orders.problemDescript}</td></tr>
     <c:if test="${not empty orders.planStartDate}">
         <tr><td>Planowane rozpoczęcie naprawy</td><td>${newParsedPlanDate}</td></tr>
@@ -47,15 +63,14 @@
     <tr><td>Stawka godzinowa</td><td>${orders.hourPrice}</td></tr>
     <tr><td>Liczba godzin</td><td>${orders.numOfHours}</td></tr>
 </table>
-<h4> Na pewno chcesz usunąć to ZLECENIE z bazy danych ?</h4>
 <table>
     <thead>
     <td><a href="OrderControl?opt=1">| Powrót do listy ZLECEŃ | </a></td>
-    <td><a href="OrderControl?opt=6&ident=${orders.id}">| TAK |</a></td>
-    <td><a href="OrderControl?opt=1"> NIE |</a></td>
+    <td><a href="OrderControl?opt=4&ident=${orders.id}">Modyfikuj | </a></td>
+    <td><a href="OrderControl?opt=5&ident=${orders.id}">Usuń |</a></td>
     </thead>
 </table>
 
-<%@ include file="footer.jspf" %>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

@@ -3,23 +3,30 @@
 <%--
   Created by IntelliJ IDEA.
   User: bibipl
-  Date: 30.10.18
-  Time: 23:02
+  Date: 01.11.18
+  Time: 15:35
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Samochody użytkownika</title>
+    <title>${cl.name} ${cl.surname}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-<%@ include file="header.jspf" %>
+<%@ include file="../header.jspf" %>
+<table>
+    <thead>
+        <th scope="col">| ID: ${cl.id} | </th>
+        <th scope="col"> Imię: ${cl.name} | </th>
+        <th scope="col"> Nazwisko: ${cl.surname} |</th>
+    </thead>
+</table>
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><a href="CarControl?opt=2">Dodaj Samochód</a></th>
+        <th scope="col"><a href="CarControl?opt=2&ident=${cl.id}">Dodaj Samochód</a></th>
         <th scope="col">model</th>
         <th scope="col">marka</th>
         <th scope="col">nr rej.</th>
@@ -45,8 +52,13 @@
             <td><a href="CarControl?opt=5&ident=${item.id}">Usuń</a></td>
         </tr>
     </c:forEach>
-
 </table>
-<%@ include file="footer.jspf" %>
+<table>
+    <thead></thead>
+    <tr>
+        <td><a href="CarControl?opt=1">Powrót do listy samochodów</a></td>
+    </tr>
+</table>
+<%@ include file="../footer.jspf" %>
 </body>
 </html>

@@ -16,10 +16,11 @@
     <thead></thead>
     <tr>
         <td><a href="index.jsp">[MENU] |</a></td>
-        <td><a href="EmployeeControl?opt=1">PRACOWNICY | </a></td>
         <td><a href="ClientControl?opt=1">KLIENCI | </a></td>
-        <td><a href="CarControl?opt=1">SAMOCHODY |</a></td>
         <td><a href="OrderControl?opt=1">ZLECENIA |</a></td>
+        <td><a href="EmployeeControl?opt=1">PRACOWNICY | </a></td>
+        <td><a href="CarControl?opt=1">SAMOCHODY |</a></td>
+        <td><a href="ReportControl?opt=1">RAPORTY |</a></td>
     </tr>
 </table>
 </body>

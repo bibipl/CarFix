@@ -1,9 +1,14 @@
 package pl.coderslab.controler;
 
 
+import pl.coderslab.model.Order;
+import pl.coderslab.dao.OrderDao;
 import pl.coderslab.model.Employee;
 import pl.coderslab.dao.EmployeeDao;
-import pl.coderslab.utils.DbUtil;
+import pl.coderslab.model.Car;
+import pl.coderslab.model.OrdCarEmpl;
+
+import pl.coderslab.dao.CarDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +49,7 @@ public class EmployeeControl extends HttpServlet {
         List<Employee> workers = EmployeeDao.loadAllEmployees();
         if (workers.size() != 0) {
             request.setAttribute("empl", workers);
-            request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
+            request.getRequestDispatcher("employees/employShowAll.jsp").forward(request, response);
         } else {
             response.getWriter().append("Nie ma nic do wyświetlenia");
         }
@@ -62,7 +65,7 @@ public class EmployeeControl extends HttpServlet {
                     workers = EmployeeDao.loadAllEmployees();
                     if (workers.size() != 0) {
                         request.setAttribute("empl", workers);
-                        request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
+                        request.getRequestDispatcher("employees/employShowAll.jsp").forward(request, response);
                     } else {
                         response.getWriter().append("Nie ma nic do wyświetlenia");
                     }
@@ -70,7 +73,7 @@ public class EmployeeControl extends HttpServlet {
                 break;
             }
             case "2": { // add new employee
-                request.getRequestDispatcher("employAdd.jsp").forward(request, response);
+                request.getRequestDispatcher("employees/employAdd.jsp").forward(request, response);
                 break;
             }
             case "3": { // show details by id
@@ -82,10 +85,10 @@ public class EmployeeControl extends HttpServlet {
                     a.printStackTrace();
                 }
                 request.setAttribute("empl", empl);
-                request.getRequestDispatcher("employShowById.jsp").forward(request, response);
+                request.getRequestDispatcher("employees/employShowById.jsp").forward(request, response);
                 break;
             }
-            case "4": {
+            case "4": { // MODIFY EMPLOYEE
                 String ident = request.getParameter("ident");
                 Employee empl =new Employee();
                 try {
@@ -94,19 +97,19 @@ public class EmployeeControl extends HttpServlet {
                     a.printStackTrace();
                 }
                 request.setAttribute("empl", empl);
-                request.getRequestDispatcher("employModif.jsp").forward(request, response);
+                request.getRequestDispatcher("employees/employModif.jsp").forward(request, response);
                 break;
-            }case "5": {
+            }case "5": { // DELETE 1 - are you sure?
                 String ident = request.getParameter("ident");
                 try {
                     Employee empl = EmployeeDao.loadEmployeeById (Integer.parseInt(ident));
                     request.setAttribute("empl", empl);
-                    request.getRequestDispatcher("employDelete.jsp").forward(request, response);
+                    request.getRequestDispatcher("employees/employDelete.jsp").forward(request, response);
                 }catch (NumberFormatException a) {
                     a.printStackTrace();
                 }
                 break;
-            }case "6": {
+            }case "6": {// DELETE 2 - ERASE
                 String ident = request.getParameter("ident");
                 try {
                     Employee empl = EmployeeDao.loadEmployeeById (Integer.parseInt(ident));
@@ -115,12 +118,32 @@ public class EmployeeControl extends HttpServlet {
                         workers = EmployeeDao.loadAllEmployees();
                         if (workers.size() != 0) {
                             request.setAttribute("empl", workers);
-                            request.getRequestDispatcher("employShowAll.jsp").forward(request, response);
+                            request.getRequestDispatcher("employees/employShowAll.jsp").forward(request, response);
                         } else {
                             response.getWriter().append("Nie ma nic do wyświetlenia");
                         }
                 }catch (NumberFormatException e) {
                     e.printStackTrace();
+                }
+                break;
+            }case "7": { // Show all ORDERS by EMPLOYEE
+                String ident = request.getParameter("ident"); // ident = empl id
+                Employee empl =new Employee();
+                try {
+                    empl = EmployeeDao.loadEmployeeById (Integer.parseInt(ident));
+                    List<OrdCarEmpl> ordCarEmpls = new ArrayList<>();
+                    List<Order> orders = OrderDao.loadAllOrders_Empl(empl.getId());
+                    for (Order ord : orders) {
+                    OrdCarEmpl hybrid = new OrdCarEmpl();
+                    hybrid.setOrder(ord);
+                    hybrid.setCar(CarDao.loadCarById(ord.getCarId()));
+                        ordCarEmpls.add(hybrid);
+                    }
+                    request.setAttribute("ordCarEmpl", ordCarEmpls);
+                    request.setAttribute("empl", empl);
+                    request.getRequestDispatcher("orders/orderShowByEmpl.jsp").forward(request, response);
+                } catch (NumberFormatException a) {
+                    a.printStackTrace();
                 }
                 break;
             }
