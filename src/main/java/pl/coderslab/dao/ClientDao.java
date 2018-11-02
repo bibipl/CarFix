@@ -36,6 +36,7 @@ public class ClientDao {
                 if (rs.next()) {
                     return rs.getInt(1);
                 }
+                conn.close();
             } catch (SQLException e) {
                 return -1;
             }
@@ -49,6 +50,7 @@ public class ClientDao {
             preparedStatement.setString(4, cl.getPhone());
             preparedStatement.setInt(5, cl.getId());
             preparedStatement.executeUpdate();
+            conn.close();
         } catch (SQLException e) {
             return -1;
         }
@@ -69,6 +71,7 @@ public class ClientDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) loadedClient = (uploadClient(resultSet));
+            conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -88,6 +91,7 @@ public class ClientDao {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) employees.add(uploadClient(resultSet));
+            conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -108,6 +112,7 @@ public class ClientDao {
                 preparedStatement.setInt(1, client.getId());
                 preparedStatement.executeUpdate();
                 client.setId(0);
+                conn.close();
             } catch (SQLException e) {
                 return false;
             }

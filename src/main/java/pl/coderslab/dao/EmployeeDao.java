@@ -38,6 +38,7 @@ public class EmployeeDao {
                 if (rs.next()) {
                     return rs.getInt(1);
                 }
+                conn.close();
             } catch (SQLException e) {
                 return -1;
             }
@@ -53,6 +54,7 @@ public class EmployeeDao {
             preparedStatement.setFloat(6, empl.getHourPrice());;
             preparedStatement.setInt(7, empl.getId());
             preparedStatement.executeUpdate();
+            conn.close();
         } catch (SQLException e) {
             return -1;
         }
@@ -73,6 +75,7 @@ public class EmployeeDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) loadedEmployee = (uploadEmployee(resultSet));
+            conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -92,6 +95,7 @@ public class EmployeeDao {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) employees.add(uploadEmployee(resultSet));
+            conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -112,6 +116,7 @@ public class EmployeeDao {
                 preparedStatement.setInt(1, employee.getId());
                 preparedStatement.executeUpdate();
                 employee.setId(0);
+                conn.close();
             } catch (SQLException e) {
                 return false;
             }

@@ -32,6 +32,7 @@ public class CarDao {
                 preparedStatement.setInt(6, car.getOwnerId());
                 preparedStatement.executeUpdate();
                 ResultSet rs = preparedStatement.getGeneratedKeys();
+                conn.close();
                 if (rs.next()) {
                     return rs.getInt(1);
                 }
@@ -50,6 +51,7 @@ public class CarDao {
             preparedStatement.setInt(6, car.getOwnerId());
             preparedStatement.setInt(7, car.getId());
             preparedStatement.executeUpdate();
+            conn.close();
         } catch (SQLException e) {
             return -1;
         }
@@ -71,7 +73,7 @@ public class CarDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) loadedCar = (uploadCar(resultSet));
-
+            conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -92,7 +94,7 @@ public class CarDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) cars.add(uploadCar(resultSet));
-
+            conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -113,6 +115,7 @@ public class CarDao {
                 preparedStatement.setInt(1, car.getId());
                 preparedStatement.executeUpdate();
                 car.setId(0);
+                conn.close();
             } catch (SQLException e) {
                 return false;
             }
@@ -134,7 +137,7 @@ public class CarDao {
             preparedStatement.setInt(1, ownId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) cars.add(uploadCar(resultSet));
-
+            conn.close();
         } catch (SQLException e) {
             return null;
         }

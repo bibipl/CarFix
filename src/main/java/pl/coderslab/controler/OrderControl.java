@@ -41,23 +41,59 @@ public class OrderControl extends HttpServlet {
         try {
             if (request.getParameter("planStartDate")!="" && request.getParameter("planStartDate")!=null)
                 newOrder.setPlanStartDate(LocalDate.parse(request.getParameter("planStartDate")));
-            if (request.getParameter("realStartDate")!="" && request.getParameter("realStartDate")!=null)
-                newOrder.setRealStartDate(LocalDate.parse(request.getParameter("realStartDate")));
+            if (request.getParameter("status") != null) {
+                newOrder.setStatus(Integer.parseInt(request.getParameter("status")));
+                switch (newOrder.getStatus()) {
+                    case 1: {
+                        if (newOrder.getPlanStartDate()==null)
+                            newOrder.setPlanStartDate(LocalDate.now());
+                        newOrder.setRealStartDate(null);
+                        newOrder.setRealEndDate(null);
+                        break;
+                    }
+                    case 2: {
+                        if (newOrder.getPlanStartDate()==null)
+                            newOrder.setPlanStartDate(LocalDate.now());
+                        newOrder.setRealStartDate(null);
+                        newOrder.setRealEndDate(null);
+                        break;
+                    }
+                    case 3: {
+                        if (newOrder.getPlanStartDate()==null)
+                            newOrder.setPlanStartDate(LocalDate.now());
+                        if (newOrder.getRealStartDate()==null)
+                            newOrder.setRealStartDate(LocalDate.now());
+                        newOrder.setRealEndDate(null);
+                        break;
+                    }case 4: {
+                        if (newOrder.getPlanStartDate()==null)
+                            newOrder.setPlanStartDate(LocalDate.now());
+                        if (newOrder.getRealStartDate()==null)
+                            newOrder.setRealStartDate(LocalDate.now());
+                        if (newOrder.getRealEndDate()==null)
+                            newOrder.setRealEndDate(LocalDate.now());
+                        break;
+                    }case 5: {
+                        newOrder.setPlanStartDate(null);
+                        newOrder.setRealStartDate(null);
+                        newOrder.setRealEndDate(null);
+                        break;
+                    }
+                }
+            }
             if (request.getParameter("employeeId")!=null)
                 newOrder.setEmployeeId(Integer.parseInt(request.getParameter("employeeId")));
             newOrder.setProblemDescript(request.getParameter("problemDescript"));
             newOrder.setFixDescript(request.getParameter("fixDescript"));
-            if (request.getParameter("status") != null)
-            newOrder.setStatus(Integer.parseInt(request.getParameter("status")));
+
             if (request.getParameter("carId")!=null)
                 newOrder.setCarId(Integer.parseInt(request.getParameter("carId")));
             if (request.getParameter("valueServ")!=null)
                 newOrder.setValueServ(Float.parseFloat(request.getParameter("valueServ")));
             if (request.getParameter("valueParts")!=null)
                 newOrder.setValueParts(Float.parseFloat(request.getParameter("valueParts")));
+
             newOrder.setHourPrice(EmployeeDao.loadEmployeeById(newOrder.getEmployeeId()).getHourPrice());
-            if (request.getParameter("hourPrice")!=null)
-                newOrder.setHourPrice(Float.parseFloat(request.getParameter("hourPrice")));
 
             if (request.getParameter("numOfHours")!=null)
                 newOrder.setNumOfHours(Float.parseFloat(request.getParameter("numOfHours")));

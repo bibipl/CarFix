@@ -1,0 +1,25 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: bibipl
+  Date: 02.11.18
+  Time: 12:52
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:choose>
+    <c:when test="${item.order.status==1}">
+        <td>| Przyjęty |</td>
+    </c:when>
+    <c:when test="${item.order.status==2}">
+        <td>| Zatwierdzony |</td>
+    </c:when>
+    <c:when test="${item.order.status==3}">
+        <td>| Naprawiany |</td>
+    </c:when>
+    <c:when test="${item.order.status==4}">
+        <td>| Gotowy |</td>
+    </c:when>
+    <c:otherwise>
+        <td>| Rezygnacja |</td>
+    </c:otherwise>
+</c:choose>

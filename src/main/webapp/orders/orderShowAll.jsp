@@ -14,72 +14,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
 </head>
 <body>
 <%@ include file="../header.jspf" %>
 <table class="table">
-    <thead>
-    <tr>
-        <th scope="col"><a href="OrderControl?opt=2">| + |</a></th>
-        <th scope="col">MARKA</th>
-        <th scope="col">MODEL</th>
-        <th scope="col">REJESTRACJA</th>
-        <th scope="col">SERWISANT</th>
-        <th scope="col">PLAN</th>
-        <th scope="col">NAPRAWA</th>
-        <th scope="col">STATUS</th>
-        <th scope="col">SZCZEGÓŁY</th>
-        <th scope="col">MODYFIKUJ</th>
-        <th scope="col">USUŃ</th>
-    </tr>
-    </thead>
+    <%@ include file="tableTHead.jspf" %>
     <c:forEach items="${ordCarEmpl}" var="item">
-
-        <c:if test="${not empty item.order.planStartDate}">
-            <fmt:parseDate value="${item.order.planStartDate}" pattern="yyyy-MM-dd" var="parsedStartDate" type="date" />
-            <fmt:formatDate value="${parsedStartDate}" var="newParsedStartDate" type="date" pattern="dd.MM.yyyy" />
-        </c:if>
-        <c:if test="${not empty item.order.realStartDate}">
-            <fmt:parseDate value="${item.order.realStartDate}" pattern="yyyy-MM-dd" var="parsedRealDate" type="date" />
-            <fmt:formatDate value="${parsedRealDate}" var="newParsedRealDate" type="date" pattern="dd.MM.yyyy" />
-        </c:if>
-
+        <%@ include file="dateFormatItem.jspf" %>
         <tr>
             <td>${item.order.id}</td>
             <td>${item.car.model}</td>
             <td>${item.car.brand}</td>
             <td>${item.car.registration}</td>
             <td>${item.employee.name}  ${item.employee.surname}</td>
-            <c:if test="${not empty item.order.planStartDate}">
-                <td>${newParsedStartDate}</td>
-            </c:if>
-            <c:if test="${empty item.order.planStartDate}">
-                <td>Brak</td>
-            </c:if>
-            <c:if test="${not empty item.order.realStartDate}">
-                <td>${newParsedRealDate}</td>
-            </c:if>
-            <c:if test="${empty item.order.realStartDate}">
-                <td>Brak</td>
-            </c:if>
-            <c:choose>
-                <c:when test="${item.order.status==1}">
-                    <td>| Przyjęty |</td>
-                </c:when>
-                <c:when test="${item.order.status==2}">
-                    <td>| Zatwierdzony |</td>
-                </c:when>
-                <c:when test="${item.order.status==3}">
-                    <td>| Naprawiany |</td>
-                </c:when>
-                <c:when test="${item.order.status==4}">
-                    <td>| Gotowy |</td>
-                </c:when>
-                <c:otherwise>
-                    <td>| Rezygnacja |</td>
-                </c:otherwise>
-            </c:choose>
+            <%@ include file="dateTDItem.jspf" %>
+            <%@ include file="statusItem.jspf" %>
             <td><a href="OrderControl?opt=3&ident=${item.order.id}">Szczegóły</a></td>
             <td><a href="OrderControl?opt=4&ident=${item.order.id}">Modyfikuj</a></td>
             <td><a href="OrderControl?opt=5&ident=${item.order.id}">Usuń</a></td>

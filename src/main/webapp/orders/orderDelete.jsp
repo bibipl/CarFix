@@ -14,15 +14,8 @@
 </head>
 <body>
 <%@ include file="../header.jspf" %>
+<%@ include file="dateFormat.jspf" %>
 
-<c:if test="${not empty orders.planStartDate}">
-    <fmt:parseDate value="${orders.planStartDate}" pattern="yyyy-MM-dd" var="parsedStartDate" type="date" />
-    <fmt:formatDate value="${parsedStartDate}" var="newParsedPlanDate" type="date" pattern="dd.MM.yyyy" />
-</c:if>
-<c:if test="${not empty orders.realStartDate}">
-    <fmt:parseDate value="${orders.realStartDate}" pattern="yyyy-MM-dd" var="parsedRealDate" type="date" />
-    <fmt:formatDate value="${parsedRealDate}" var="newParsedRealDate" type="date" pattern="dd.MM.yyyy" />
-</c:if>
 <table>
     <tr><td>ID</td><td>${orders.id}</td></tr>
     <tr><td>Samochód</td><td>${cars.model} | ${cars.brand} | ${cars.registration}</td></tr>
@@ -56,6 +49,12 @@
     </c:if>
     <c:if test="${empty orders.realStartDate}">
         <tr><td>Data rozpoczęcia naprawy</td><td>Brak</td></tr>
+    </c:if>
+    <c:if test="${not empty orders.realEndDate}">
+        <tr><td>Data zakończenia naprawy</td><td>${newParsedRealDate}</td></tr>
+    </c:if>
+    <c:if test="${empty orders.realEndDate}">
+        <tr><td>Data zakończenia naprawy</td><td>Brak</td></tr>
     </c:if>
     <tr><td>Opis naprawy</td><td>${orders.fixDescript}</td></tr>
     <tr><td>Koszt naprawy</td><td>${orders.valueServ}</td></tr>

@@ -20,7 +20,8 @@ public class OrderDao {
         if (order.getId() == 0) {
             try {
                 Connection conn = DbUtil.getConn();
-                String sql = "INSERT INTO repair(plan_start_date,real_start_date, employee_id,problem_descript,fix_descript,stat,car_id,value_serv,value_parts,hour_price,num_of_hours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO repair(plan_start_date,real_start_date, employee_id,problem_descript,fix_descript,stat,car_id,value_serv,value_parts," +
+                        "hour_price,num_of_hours, real_end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 String[] generatedColumns = {"ID"};
                 PreparedStatement preparedStatement = conn.prepareStatement(sql, generatedColumns);
 
@@ -41,18 +42,21 @@ public class OrderDao {
                 else preparedStatement.setFloat(10, 0);
                 if (order.getNumOfHours() != null)preparedStatement.setFloat(11, order.getNumOfHours());
                 else preparedStatement.setFloat(11, 0);
+                if (order.getRealEndDate() != null) preparedStatement.setString(12, java.sql.Date.valueOf(order.getRealEndDate()).toString());
+                else preparedStatement.setString(12, null);
                 preparedStatement.executeUpdate();
                 ResultSet rs = preparedStatement.getGeneratedKeys();
                 if (rs.next()) {
                     return rs.getInt(1);
                 }
+                conn.close();
             } catch (SQLException e) {
                 return -1;
             }
         } else try {
             Connection conn = DbUtil.getConn();
             String sql = "UPDATE repair SET plan_start_date=?,real_start_date=?,employee_id=?,problem_descript=?,fix_descript=?," +
-                         "stat=?,car_id=?,value_serv=?,value_parts=?,hour_price=?,num_of_hours=? WHERE id = ?";
+                         "stat=?,car_id=?,value_serv=?,value_parts=?,hour_price=?,num_of_hours=?,real_end_date=? WHERE id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             if (order.getPlanStartDate() != null) preparedStatement.setString(1, java.sql.Date.valueOf(order.getPlanStartDate()).toString());
             else preparedStatement.setString(1, null);
@@ -67,15 +71,26 @@ public class OrderDao {
             else preparedStatement.setFloat(8, 0);
             if (order.getValueParts() != null)preparedStatement.setFloat(9, order.getValueParts());
             else preparedStatement.setFloat(9, 0);
-            if (order.getHourPrice() != null)preparedStatement.setFloat(10, order.getHourPrice());
-            else preparedStatement.setFloat(10, 0);
+
+            if( order.getEmployeeId()!=0 ) {
+                preparedStatement.setFloat(10, EmployeeDao.loadEmployeeById(order.getEmployeeId()).getHourPrice());
+            } else {
+                preparedStatement.setFloat(10, 0);
+            }
+           /* if (order.getHourPrice() != null)preparedStatement.setFloat(10, order.getHourPrice());
+            else preparedStatement.setFloat(10, 0); we adjust automatically hourprice. This is to be deleted*/
+
             if (order.getNumOfHours() != null)preparedStatement.setFloat(11, order.getNumOfHours());
             else preparedStatement.setFloat(11, 0);
-            preparedStatement.setInt(12, order.getId());
+            if (order.getRealEndDate() != null) preparedStatement.setString(12, java.sql.Date.valueOf(order.getRealEndDate()).toString());
+            else preparedStatement.setString(12, null);
+            preparedStatement.setInt(13, order.getId());
             preparedStatement.executeUpdate();
+            conn.close();
         } catch (SQLException e) {
             return -1;
         }
+
         return order.getId();
     } // End SaveToDB
 
@@ -94,7 +109,7 @@ public class OrderDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) loadedOrder = (uploadOrder(resultSet));
-
+        conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -108,14 +123,13 @@ public class OrderDao {
 
     public static List<Order> loadAllOrders() {
         ArrayList<Order> orders = new ArrayList<Order>();
-        String sql = "SELECT * FROM repair";
+        String sql = "SELECT * FROM repair ORDER BY real_start_date DESC ";
         try {
             Connection conn = DbUtil.getConn();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) orders.add(uploadOrder(resultSet));
-
+        conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -136,6 +150,7 @@ public class OrderDao {
                 preparedStatement.setInt(1, order.getId());
                 preparedStatement.executeUpdate();
                 order.setId(0);
+                conn.close();
             } catch (SQLException e) {
                 return false;
             }
@@ -177,7 +192,7 @@ public class OrderDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) ordersRead.add(uploadOrder(resultSet));
-
+            conn.close();
         } catch (SQLException e) {
             return null;
         }
@@ -193,7 +208,9 @@ public class OrderDao {
         Order loadedOrder = new Order();
         try {
             loadedOrder.setId(resultSet.getInt("id"));
-            loadedOrder.setPlanStartDate(resultSet.getDate("plan_start_date").toLocalDate());
+            if (resultSet.getDate("plan_start_date") != null)
+                loadedOrder.setPlanStartDate(resultSet.getDate("plan_start_date").toLocalDate());
+            else loadedOrder.setPlanStartDate (null);
             if (resultSet.getDate("real_start_date") != null)
                 loadedOrder.setRealStartDate(resultSet.getDate("real_start_date").toLocalDate());
             else loadedOrder.setRealStartDate (null);
@@ -206,6 +223,10 @@ public class OrderDao {
             loadedOrder.setValueParts(resultSet.getFloat("value_parts"));
             loadedOrder.setHourPrice(resultSet.getFloat("hour_price"));
             loadedOrder.setNumOfHours(resultSet.getFloat("num_of_hours"));
+            if (resultSet.getDate("real_end_date") != null)
+                loadedOrder.setRealEndDate(resultSet.getDate("real_end_date").toLocalDate());
+            else loadedOrder.setRealEndDate (null);
+
         } catch (SQLException e) {
             return null;
         }

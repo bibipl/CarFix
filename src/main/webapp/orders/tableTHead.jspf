@@ -1,0 +1,24 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: bibipl
+  Date: 02.11.18
+  Time: 12:54
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<thead>
+<tr>
+    <th scope="col"><a href="OrderControl?opt=2">| + |</a></th>
+    <th scope="col">MARKA</th>
+    <th scope="col">MODEL</th>
+    <th scope="col">REJESTRACJA</th>
+    <th scope="col">SERWISANT</th>
+    <th scope="col">PLAN</th>
+    <th scope="col">START</th>
+    <th scope="col">KONIEC</th>
+    <th scope="col">STATUS</th>
+    <th scope="col">SZCZEGÓŁY</th>
+    <th scope="col">MODYFIKUJ</th>
+    <th scope="col">USUŃ</th>
+</tr>
+</thead>

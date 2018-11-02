@@ -35,8 +35,6 @@
         <option selected value="1">Przyjęty</option>
         <option value="2">Zatwierdzony koszt naprawy</option>
         <option value="3">W naprawie</option>
-        <option value="4">Gotowy</option>
-        <option value="5">Rezygnacja</option>
     </select>
     <input type="submit" value="Dodaj"><br>
 </form>

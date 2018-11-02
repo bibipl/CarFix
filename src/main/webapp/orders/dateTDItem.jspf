@@ -1,0 +1,28 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: bibipl
+  Date: 02.11.18
+  Time: 12:50
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:if test="${not empty item.order.planStartDate}">
+    <td>${newParsedStartDate}</td>
+</c:if>
+<c:if test="${empty item.order.planStartDate}">
+    <td>Brak</td>
+</c:if>
+<c:if test="${not empty item.order.realStartDate}">
+    <td>${newParsedRealDate}</td>
+</c:if>
+<c:if test="${empty item.order.realStartDate}">
+    <td>Brak</td>
+</c:if>
+<c:if test="${not empty item.order.realEndDate}">
+    <td>${newParsedEndDate}</td>
+</c:if>
+<c:if test="${empty item.order.realEndDate}">
+    <td>Brak</td>
+</c:if>

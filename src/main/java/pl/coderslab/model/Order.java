@@ -15,15 +15,19 @@ public class Order {
     Float valueParts;
     Float hourPrice;
     Float numOfHours;
+    LocalDate realEndDate;
 
 
     public Order() {
     }
 
-    public Order(LocalDate planStartDate, LocalDate realStartDate, int employeeId, String problemDescript, String fixDescript, int status,
-                 int carId, Float valueServ, Float valueParts, Float hourPrice, Float numOfHours) {
+    public Order(int id, LocalDate planStartDate, LocalDate realStartDate, LocalDate realEndDate, int employeeId,
+                 String problemDescript, String fixDescript, int status, int carId, Float valueServ, Float valueParts,
+                 Float hourPrice, Float numOfHours) {
+        this.id = id;
         this.planStartDate = planStartDate;
         this.realStartDate = realStartDate;
+        this.realEndDate = realEndDate;
         this.employeeId = employeeId;
         this.problemDescript = problemDescript;
         this.fixDescript = fixDescript;
@@ -130,4 +134,8 @@ public class Order {
     public void setNumOfHours(Float numOfHours) {
         this.numOfHours = numOfHours;
     }
+
+    public LocalDate getRealEndDate() { return realEndDate; }
+
+    public void setRealEndDate(LocalDate realEndDate) { this.realEndDate = realEndDate; }
 }
