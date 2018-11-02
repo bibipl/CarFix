@@ -32,7 +32,7 @@
 </form>
 <table>
     <thead>
-    <td><a href="OrderControl?opt=1">| Powrót do listy zleceń | </a></td>
+    <td><a href="OrderControl?opt=1">| Powrót do listy Zleceń | </a></td>
     <td><a href="OrderControl?opt=3&ident=${item.id}">Szczegóły | </a></td>
     <td><a href="OrderControl?opt=4&ident=${item.id}">Modyfikuj | </a></td>
     <td><a href="OrderControl?opt=5&ident=${item.id}">Usuń |</a></td>

@@ -27,7 +27,7 @@
 <br>
 <table>
     <th></th>
-    <tr><td><a href="ClientControl?opt=1">| Powrót do listy klientów |</a></td></tr>
+    <tr><td><a href="ClientControl?opt=1">| Powrót do listy Klientów |</a></td></tr>
 </table>
 <%@ include file="../footer.jspf" %>
 </body>

@@ -1,6 +1,11 @@
 package pl.coderslab.controler;
 
+import pl.coderslab.dao.CarDao;
+import pl.coderslab.dao.EmployeeDao;
 import pl.coderslab.dao.OrderDao;
+import pl.coderslab.model.Car;
+import pl.coderslab.model.Employee;
+import pl.coderslab.model.OrdCarEmpl;
 import pl.coderslab.model.Order;
 
 import javax.servlet.ServletException;
@@ -10,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "OrderControl", urlPatterns = "/OrderControl")
@@ -64,9 +70,7 @@ public class OrderControl extends HttpServlet {
 
         OrderDao.saveToDB(newOrder); // PUT "NEW" OR "MODIFIED" to MYSQL
 
-        List<Order> orders = OrderDao.loadAllOrders();
-        request.setAttribute("orders", orders);
-        request.getRequestDispatcher("orders/orderShowAll.jsp").forward(request, response);
+        ListAllOrders(request, response);
     }
 
 //####################################################################################################################################
@@ -78,19 +82,15 @@ public class OrderControl extends HttpServlet {
         String opt = request.getParameter("opt");
 
         switch (opt) {
-            case "1": { // SHOW ALL "ORDERS"
-                List<Order> orders = OrderDao.loadAllOrders();
-                request.setAttribute("orders", orders);
-                request.getRequestDispatcher("orders/orderShowAll.jsp").forward(request, response);
+            case "1": { // Show all ORDERS
+                ListAllOrders(request, response);
                 break;
-            }
-            case "2": { // ADD "ORDER"
 
+            }case "2": { // ADD "ORDER"
                     request.getRequestDispatcher("orders/orderAdd.jsp").forward(request, response);
-
                 break;
-            }
-            case "3": { // SHOW DETAILS
+
+            } case "3": { // SHOW DETAILS
                 String ident = request.getParameter("ident");
                 Order order =new Order();
                 try {
@@ -99,11 +99,15 @@ public class OrderControl extends HttpServlet {
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
+                Car car = CarDao.loadCarById(order.getCarId());
+                Employee employee = EmployeeDao.loadEmployeeById(order.getEmployeeId());
                 request.setAttribute("orders", order);
+                request.setAttribute("cars", car);
+                request.setAttribute("employees", employee);
                 request.getRequestDispatcher("orders/orderShowById.jsp").forward(request, response);
                 break;
-            }
-            case "4": { // MODIFY ORDER
+
+            }case "4": { // MODIFY ORDER
                 String ident = request.getParameter("ident");
                 Order order =new Order();
                 try {
@@ -115,57 +119,77 @@ public class OrderControl extends HttpServlet {
                 request.setAttribute("orders", order);
                 request.getRequestDispatcher("orders/orderModif.jsp").forward(request, response);
                 break;
+
             }case "5": { // DELETE1 - SHOW AND ASK
                 String ident = request.getParameter("ident");
+                Order order = new Order();
                 try {
                     int orderId = Integer.parseInt(ident);
-                    Order order = OrderDao.loadOrderById (orderId);
-                    request.setAttribute("orders", order);
-                    request.getRequestDispatcher("orders/orderDelete.jsp").forward(request, response);
+                    order = OrderDao.loadOrderById (orderId);
                 }catch (NumberFormatException a) {
                     a.printStackTrace();
                 }
+                Car car = CarDao.loadCarById(order.getCarId());
+                Employee employee = EmployeeDao.loadEmployeeById(order.getEmployeeId());
+                request.setAttribute("orders", order);
+                request.setAttribute("cars", car);
+                request.setAttribute("employees", employee);
+                request.getRequestDispatcher("orders/orderDelete.jsp").forward(request, response);
                 break;
+
             }case "6": { // DELETE2 - ERASE
                 String ident = request.getParameter("ident");
                 try {
                     int orderId = Integer.parseInt(ident);
                     Order order = OrderDao.loadOrderById (orderId);
-                    boolean deleted =OrderDao.delete(order);
-                    List<Order> orders = OrderDao.loadAllOrders();
-                    request.setAttribute("orders", orders);
-                    request.setAttribute("deleted", deleted);// if false we will display "could not remove"
-                    request.getRequestDispatcher("orders/orderShowAll.jsp").forward(request, response);
+                    OrderDao.delete(order);
                 }catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
-                break;
-            }case "7": { // SHOW ORDERS BY "CAR" ID
-                String ident = request.getParameter("ident");
-                try {
-                    int carId = Integer.parseInt(ident);
-                    List<Order> orders = OrderDao.loadAllOrders_Car(carId);
-                    request.setAttribute("orders", orders);
-                    request.getRequestDispatcher("orders/orderShowAll.jsp").forward(request, response);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }case "8": { // SHOW ORDERS BY "EMPLOYEE" ID
-                String ident = request.getParameter("ident");
-                try {
-                    int emplId = Integer.parseInt(ident);
-                    List<Order> orders = OrderDao.loadAllOrders_Empl(emplId);
-                    request.setAttribute("orders", orders);
-                    request.getRequestDispatcher("orders/orderShowAll.jsp").forward(request, response);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                ListAllOrders(request, response);
                 break;
             }
         }
     }
 
 //####################################################################################################################################
+    // Extracted Method. Creates OrdCarEmpl {Car, Order, Employee} - to disply conviniently
+//####################################################################################################################################
+
+    private static List<OrdCarEmpl> CreateComboData(List<Order> orders) {
+    List<OrdCarEmpl> ordCarEmpls = new ArrayList<>();
+    try {
+        for (Order ord : orders) {  // for each order we pack kobo with equivalen car and employee
+            OrdCarEmpl hybrid = new OrdCarEmpl();
+            hybrid.setOrder(ord);
+            hybrid.setCar(CarDao.loadCarById(ord.getCarId()));
+            hybrid.setEmployee(EmployeeDao.loadEmployeeById(ord.getEmployeeId()));
+            ordCarEmpls.add(hybrid);
+        }
+    } catch (NumberFormatException a) {
+        a.printStackTrace();
+    }
+    return ordCarEmpls;
+}
+//####################################################################################################################################
+    // Extracted Method. Lists all orders.
+//####################################################################################################################################
+
+    private void ListAllOrders(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            List<OrdCarEmpl> ordCarEmpls = new ArrayList<>(); // pobierzemy kombo dane
+            List<Order> orders = OrderDao.loadAllOrders(); // najpierw zelecenia
+            ordCarEmpls = CreateComboData(orders);  // load Combo data - order+equivalen car and employee
+            request.setAttribute("ordCarEmpl", ordCarEmpls);
+            request.getRequestDispatcher("orders/orderShowAll.jsp").forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }catch (IOException a) {
+            a.printStackTrace();
+        }
+    }
+
+//####################################################################################################################################
+
 }
 

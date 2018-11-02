@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Klienci</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
@@ -19,16 +19,16 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><a href="ClientControl?opt=2">Dodaj Klienta</a></th>
-        <th scope="col">name</th>
-        <th scope="col">surname</th>
-        <th scope="col">birthday</th>
-        <th scope="col">phone</th>
+        <th scope="col"><a href="ClientControl?opt=2">| + |</a></th>
+        <th scope="col">IMIĘ</th>
+        <th scope="col">NAZWISKO</th>
+        <th scope="col">URODZINY</th>
+        <th scope="col">TELEFON</th>
 
-        <th scope="col">Szczegóły</th>
-        <th scope="col">Samochody</th>
-        <th scope="col">Modyfikuj dane Klienta</th>
-        <th scope="col">Usuń Klienta</th>
+        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">SAMOCHODY</th>
+        <th scope="col">MODYFIKUJ</th>
+        <th scope="col">USUŃ</th>
     </tr>
     </thead>
     <c:forEach items="${cl}" var="item">

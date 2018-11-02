@@ -39,13 +39,12 @@
         <td> <a href="CarControl?opt=2&ident=${cl.id}">Dodaj Samochód | </a>  </td>
         <td> <a href="ClientControl?opt=1">Lista zleceń | </a>  </td>
         <td> <a href="CarControl?opt=7&ident=${cl.id}">Lista samochodów | </a></td>
-
     </tr>
 </table>
 <br>
 <table>
     <th></th>
-    <tr><td><a href="ClientControl?opt=1">| Powrót do listy klientów |</a></td></tr>
+    <tr><td><a href="ClientControl?opt=1">| Powrót do listy Klientów |</a></td></tr>
 </table>
 
 <%@ include file="../footer.jspf" %>

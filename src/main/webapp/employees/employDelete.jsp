@@ -34,7 +34,7 @@
 <br>
 <table>
     <th></th>
-    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy pracowników</a></td></tr>
+    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy Serwisantów</a></td></tr>
 </table>
 <%@ include file="../footer.jspf" %>
 </body>

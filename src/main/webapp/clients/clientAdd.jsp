@@ -20,6 +20,11 @@
     <label>Nr telefonu</label><input type="text" name="phone"><br>
     <input type="submit" value="Dodaj"><br>
 </form>
+<table>
+    <thead>
+    <td><a href="ClientControl?opt=1">| Powrót do listy Klientów | </a></td>
+    </thead>
+</table>
 <%@ include file="../footer.jspf" %>
 </body>
 </html>

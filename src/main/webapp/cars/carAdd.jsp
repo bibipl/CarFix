@@ -36,7 +36,7 @@
 </form>
 <table>
     <thead>
-        <td><a href="ClientControl?opt=7&ident=${cl.id}">| Powrót do listy samochodów | </a></td>
+        <td><a href="ClientControl?opt=7&ident=${cl.id}">| Powrót do listy Samochodów | </a></td>
         <td><a href="CarControl?opt=3&ident=${car.id}">Szczegóły | </a></td>
         <td><a href="CarControl?opt=4&ident=${car.id}">Modyfikuj | </a></td>
         <td><a href="CarControl?opt=5&ident=${car.id}">Usuń |</a></td>

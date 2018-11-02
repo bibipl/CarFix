@@ -21,67 +21,70 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><a href="OrderControl?opt=2">Dodaj Zlecenie</a></th>
-        <th scope="col">Samochód</th>
-        <th scope="col">Pracownik</th>
-        <th scope="col">Plan</th>
-        <th scope="col">Start</th>
-        <th scope="col">Status</th>
-        <th scope="col">Szczegóły</th>
-        <th scope="col">Modyfikuj</th>
-        <th scope="col">Usuń</th>
+        <th scope="col"><a href="OrderControl?opt=2">| + |</a></th>
+        <th scope="col">MARKA</th>
+        <th scope="col">MODEL</th>
+        <th scope="col">REJESTRACJA</th>
+        <th scope="col">SERWISANT</th>
+        <th scope="col">PLAN</th>
+        <th scope="col">NAPRAWA</th>
+        <th scope="col">STATUS</th>
+        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">MODYFIKUJ</th>
+        <th scope="col">USUŃ</th>
     </tr>
     </thead>
-    <c:forEach items="${orders}" var="item">
+    <c:forEach items="${ordCarEmpl}" var="item">
 
-        <c:if test="${not empty item.planStartDate}">
-            <fmt:parseDate value="${item.planStartDate}" pattern="yyyy-MM-dd" var="parsedStartDate" type="date" />
+        <c:if test="${not empty item.order.planStartDate}">
+            <fmt:parseDate value="${item.order.planStartDate}" pattern="yyyy-MM-dd" var="parsedStartDate" type="date" />
             <fmt:formatDate value="${parsedStartDate}" var="newParsedStartDate" type="date" pattern="dd.MM.yyyy" />
         </c:if>
-        <c:if test="${not empty item.realStartDate}">
-            <fmt:parseDate value="${item.realStartDate}" pattern="yyyy-MM-dd" var="parsedRealDate" type="date" />
+        <c:if test="${not empty item.order.realStartDate}">
+            <fmt:parseDate value="${item.order.realStartDate}" pattern="yyyy-MM-dd" var="parsedRealDate" type="date" />
             <fmt:formatDate value="${parsedRealDate}" var="newParsedRealDate" type="date" pattern="dd.MM.yyyy" />
         </c:if>
 
         <tr>
-            <td>${item.id}</td>
-            <td>${item.carId}</td>
-            <td>${item.employeeId}</td>
-            <c:if test="${not empty item.planStartDate}">
+            <td>${item.order.id}</td>
+            <td>${item.car.model}</td>
+            <td>${item.car.brand}</td>
+            <td>${item.car.registration}</td>
+            <td>${item.employee.name}  ${item.employee.surname}</td>
+            <c:if test="${not empty item.order.planStartDate}">
                 <td>${newParsedStartDate}</td>
             </c:if>
-            <c:if test="${empty item.planStartDate}">
+            <c:if test="${empty item.order.planStartDate}">
                 <td>Brak</td>
             </c:if>
-            <c:if test="${not empty item.realStartDate}">
+            <c:if test="${not empty item.order.realStartDate}">
                 <td>${newParsedRealDate}</td>
             </c:if>
-            <c:if test="${empty item.realStartDate}">
+            <c:if test="${empty item.order.realStartDate}">
                 <td>Brak</td>
             </c:if>
-        <c:choose>
-            <c:when test="${item.status==1}">
-                <td>| Przyjęty |</td>
-            </c:when>
-            <c:when test="${item.status==2}">
-                <td>| Zatwierdzony |</td>
-            </c:when>
-            <c:when test="${item.status==3}">
-                <td>| Naprawiany |</td>
-            </c:when>
-            <c:when test="${item.status==4}">
-                <td>| Gotowy |</td>
-            </c:when>
-            <c:otherwise>
-                <td>| Rezygnacja |</td>
-            </c:otherwise>
-        </c:choose>
-            <td><a href="OrderControl?opt=3&ident=${item.id}">Szczegóły</a></td>
-            <td><a href="OrderControl?opt=4&ident=${item.id}">Modyfikuj</a></td>
-            <td><a href="OrderControl?opt=5&ident=${item.id}">Usuń</a></td>
+            <c:choose>
+                <c:when test="${item.order.status==1}">
+                    <td>| Przyjęty |</td>
+                </c:when>
+                <c:when test="${item.order.status==2}">
+                    <td>| Zatwierdzony |</td>
+                </c:when>
+                <c:when test="${item.order.status==3}">
+                    <td>| Naprawiany |</td>
+                </c:when>
+                <c:when test="${item.order.status==4}">
+                    <td>| Gotowy |</td>
+                </c:when>
+                <c:otherwise>
+                    <td>| Rezygnacja |</td>
+                </c:otherwise>
+            </c:choose>
+            <td><a href="OrderControl?opt=3&ident=${item.order.id}">Szczegóły</a></td>
+            <td><a href="OrderControl?opt=4&ident=${item.order.id}">Modyfikuj</a></td>
+            <td><a href="OrderControl?opt=5&ident=${item.order.id}">Usuń</a></td>
         </tr>
     </c:forEach>
-
 </table>
 
 <%@ include file="../footer.jspf" %>

@@ -29,7 +29,7 @@
 </form>
 <table>
     <th></th>
-    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy pracowników</a></td></tr>
+    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy Serwisantow</a></td></tr>
 </table>
 
 <%@ include file="../footer.jspf" %>

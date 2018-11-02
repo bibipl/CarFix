@@ -22,6 +22,11 @@
     <label>Stawka godzinowa</label><input type="number" name="hourPrice" step="0.01"><br>
     <input type="submit" value="Dodaj"><br>
 </form>
+<table>
+    <thead>
+    <td><a href="EmployeeControl?opt=1">| Powrót do listy Serwisantów | </a></td>
+    </thead>
+</table>
 <%@ include file="../footer.jspf" %>
 </body>
 </html>

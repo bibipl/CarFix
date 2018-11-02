@@ -28,7 +28,7 @@
     <table>
         <thead></thead>
         <tr>
-            <td><a href="CarControl?opt=1">Powrót do listy samochodów</a></td>
+            <td><a href="CarControl?opt=1">Powrót do listy Samochodów</a></td>
             <td><a href="CarControl?opt=5&ident=${cars.id}">Usuń</a></td>
         </tr>
     </table>

@@ -19,22 +19,22 @@
 <table>
     <thead>
         <th scope="col">| ID: ${cl.id} | </th>
-        <th scope="col"> Imię: ${cl.name} | </th>
-        <th scope="col"> Nazwisko: ${cl.surname} |</th>
+        <th scope="col"> IMIĘ: ${cl.name} | </th>
+        <th scope="col"> NAZWISKO: ${cl.surname} |</th>
     </thead>
 </table>
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><a href="CarControl?opt=2&ident=${cl.id}">Dodaj Samochód</a></th>
-        <th scope="col">model</th>
-        <th scope="col">marka</th>
-        <th scope="col">nr rej.</th>
-        <th scope="col">przegląd</th>
-        <th scope="col">Id właściciela</th>
-        <th scope="col">Szczegóły - samochodu</th>
-        <th scope="col">Modyfikuj dane Samochodu</th>
-        <th scope="col">Usuń Samochód</th>
+        <th scope="col"><a href="CarControl?opt=2&ident=${cl.id}">| + |</a></th>
+        <th scope="col">MODEL</th>
+        <th scope="col">MARKA</th>
+        <th scope="col">REJESTRACJA</th>
+        <th scope="col">PRZEGLĄD</th>
+        <th scope="col">WŁAŚCICIEL</th>
+        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">MODYFIKUJ</th>
+        <th scope="col">USUŃ</th>
     </tr>
     </thead>
     <c:forEach items="${cars}" var="item">
@@ -56,7 +56,7 @@
 <table>
     <thead></thead>
     <tr>
-        <td><a href="CarControl?opt=1">Powrót do listy samochodów</a></td>
+        <td><a href="CarControl?opt=1">Powrót do listy Samochodów</a></td>
     </tr>
 </table>
 <%@ include file="../footer.jspf" %>

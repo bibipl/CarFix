@@ -30,16 +30,16 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><a href="OrderControl?opt=2">Dodaj Zlecenie</a></th>
-        <th scope="col">Marka</th>
-        <th scope="col">Model</th>
-        <th scope="col">Nr rejestracyjny</th>
-        <th scope="col">Plan</th>
-        <th scope="col">Start</th>
-        <th scope="col">Status</th>
-        <th scope="col">Szczegóły</th>
-        <th scope="col">Modyfikuj</th>
-        <th scope="col">Usuń</th>
+        <th scope="col"><a href="OrderControl?opt=2">| + |</a></th>
+        <th scope="col">MARKA</th>
+        <th scope="col">MODEL</th>
+        <th scope="col">REJESTRACJA</th>
+        <th scope="col">PLAN</th>
+        <th scope="col">START</th>
+        <th scope="col">STATUS</th>
+        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">MODYFIKUJ</th>
+        <th scope="col">USUŃ</th>
     </tr>
     </thead>
     <c:forEach items="${ordCarEmpl}" var="item">
@@ -95,7 +95,7 @@
 </table>
 <table>
     <th></th>
-    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy pracowników</a></td></tr>
+    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy Serwisantów</a></td></tr>
 </table>
 
 <%@ include file="../footer.jspf" %>

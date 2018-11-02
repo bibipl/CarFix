@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Samochody użytkownika</title>
+    <title>Samochody</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
@@ -19,15 +19,15 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><a href="CarControl?opt=2">Dodaj Samochód</a></th>
-        <th scope="col">model</th>
-        <th scope="col">marka</th>
-        <th scope="col">nr rej.</th>
-        <th scope="col">przegląd</th>
-        <th scope="col">Id właściciela</th>
-        <th scope="col">Szczegóły - samochodu</th>
-        <th scope="col">Modyfikuj dane Samochodu</th>
-        <th scope="col">Usuń Samochód</th>
+        <th scope="col"><a href="CarControl?opt=2">| + |</a></th>
+        <th scope="col">MODEL</th>
+        <th scope="col">MARKA</th>
+        <th scope="col">REJESTRACJA</th>
+        <th scope="col">PRZEGLĄD</th>
+        <th scope="col">WŁAŚCICIEL</th>
+        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">MODYFIKUJ</th>
+        <th scope="col">USUŃ</th>
     </tr>
     </thead>
     <c:forEach items="${cars}" var="item">

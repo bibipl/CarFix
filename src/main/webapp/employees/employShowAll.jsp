@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>showEmpl</title>
+    <title>Serwisanci</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -17,17 +17,16 @@
 <body>
 <%@ include file="../header.jspf" %>
 <table class="table">
-    <tr><td><a href="EmployeeControl?opt=2">Dodaj Pracownika</a></td></tr>
     <thead>
     <tr>
-        <th scope="col">id</th>
-        <th scope="col">name</th>
-        <th scope="col">surname</th>
-        <th scope="col">per hour</th>
-        <th scope="col">Zlecenia</th>
-        <th scope="col">Dane</th>
-        <th scope="col">Modyfikuj</th>
-        <th scope="col">Usuń pracownika</th>
+        <th scope="col"><a href="EmployeeControl?opt=2">| + |</a></th>
+        <th scope="col">IMIĘ</th>
+        <th scope="col">NAZWISKO</th>
+        <th scope="col">STAWKA</th>
+        <th scope="col">ZLECENIA</th>
+        <th scope="col">DANE</th>
+        <th scope="col">MODYFIKUJ</th>
+        <th scope="col">USUN</th>
 
     </tr>
     </thead>
@@ -47,7 +46,7 @@
 </table>
 <table>
     <th></th>
-    <tr><td><a href="EmployeeControl?opt=1">Lista wszystkich pracowników</a></td></tr>
+    <tr><td><a href="EmployeeControl?opt=1">Lista wszystkich Serwisantów</a></td></tr>
 </table>
 <%@ include file="../footer.jspf" %>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>

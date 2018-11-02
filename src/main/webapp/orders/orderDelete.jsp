@@ -25,8 +25,8 @@
 </c:if>
 <table>
     <tr><td>ID</td><td>${orders.id}</td></tr>
-    <tr><td>Samochód</td><td>${orders.carId}</td></tr>
-    <tr><td>Pracownik</td><td>${orders.employeeId}</td></tr>
+    <tr><td>Samochód</td><td>${cars.model} | ${cars.brand} | ${cars.registration}</td></tr>
+    <tr><td>Pracownik</td><td>${employees.name} | ${employees.surname}</td></tr>
     <c:choose>
         <c:when test="${orders.status==1}">
             <tr><td>Status naprawy</td><td>| Przyjęty |</td></tr>
