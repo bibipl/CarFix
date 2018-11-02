@@ -1,5 +1,6 @@
 package pl.coderslab.controler;
 
+import jdk.nashorn.internal.ir.IfNode;
 import pl.coderslab.model.Client;
 import pl.coderslab.dao.ClientDao;
 import pl.coderslab.model.Car;
@@ -11,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.List;
@@ -22,27 +21,34 @@ public class ClientControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=utf-8");
         String clId = request.getParameter("clId");
-        int cId=0;
-        try {
-            cId = Integer.parseInt(clId);
-        } catch (NumberFormatException e) {
-            cId=0;
-        }
-        Client newClient = ClientDao.loadClientById(cId); // or real or NULL
-
-        newClient.setName(request.getParameter("name"));
-        newClient.setSurname(request.getParameter("surname"));
-        newClient.setBirthDate(LocalDate.parse(request.getParameter("birthDate").toString()));
-        newClient.setPhone(request.getParameter("phone"));
-
-        ClientDao.saveToDB(newClient); // if newClient.id=0 - new one if !=0 - old one to modify
-
-        List<Client> cl = ClientDao.loadAllClients();
-        if (cl.size() != 0) {
-            request.setAttribute("cl", cl);
+        String src = request.getParameter("src");
+        if (src != null && src!="") { // search client
+            List<Client> clients = ClientDao.loadClientsByName(src);
+            request.setAttribute("cl", clients);
             request.getRequestDispatcher("clients/clientShowAll.jsp").forward(request, response);
         } else {
-            response.getWriter().append("Nie ma nic do wyświetlenia");
+            int cId = 0;
+            try {
+                cId = Integer.parseInt(clId);
+            } catch (NumberFormatException e) {
+                cId = 0;
+            }
+            Client newClient = ClientDao.loadClientById(cId); // or real or NULL
+
+            newClient.setName(request.getParameter("name"));
+            newClient.setSurname(request.getParameter("surname"));
+            newClient.setBirthDate(LocalDate.parse(request.getParameter("birthDate").toString()));
+            newClient.setPhone(request.getParameter("phone"));
+
+            ClientDao.saveToDB(newClient); // if newClient.id=0 - new one if !=0 - old one to modify
+
+            List<Client> cl = ClientDao.loadAllClients();
+            if (cl.size() != 0) {
+                request.setAttribute("cl", cl);
+                request.getRequestDispatcher("clients/clientShowAll.jsp").forward(request, response);
+            } else {
+                response.getWriter().append("Nie ma nic do wyświetlenia");
+            }
         }
     }
 
@@ -121,6 +127,10 @@ public class ClientControl extends HttpServlet {
                 }catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
+                break;
+            }case "8": {// FIND the  client
+                request.getRequestDispatcher("cars/carShowByClient.jsp").forward(request, response);
+
                 break;
             }
         }

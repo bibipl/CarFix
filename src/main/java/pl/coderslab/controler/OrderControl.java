@@ -125,7 +125,6 @@ public class OrderControl extends HttpServlet {
             }case "2": { // ADD "ORDER"
                 List<Employee> employee = EmployeeDao.loadAllEmployees();
                 List<Car> car = CarDao.loadAllCars();
-//                request.setAttribute("orders", order);
                 request.setAttribute("cars", car);
                 request.setAttribute("employees", employee);
                 request.getRequestDispatcher("orders/orderAdd.jsp").forward(request, response);

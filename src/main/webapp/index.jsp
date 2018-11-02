@@ -14,7 +14,7 @@
 </head>
 <body>
 <%@ include file="header.jspf" %>
-
+<img src="car.jpeg" alt="">
 <%@ include file="footer.jspf" %>
 
 </body>

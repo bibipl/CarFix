@@ -15,13 +15,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-<%@ include file="../header.jspf" %>
+<%@ include file="../headerSrc.jspf" %>
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><a href="ClientControl?opt=2">| + |</a></th>
-        <th scope="col">IMIĘ</th>
+        <th scope="col"><a href="ClientControl?opt=2">| + | </a><a href="ClientControl?opt=2"> | SRC |</a></th>
         <th scope="col">NAZWISKO</th>
+        <th scope="col">IMIĘ</th>
         <th scope="col">URODZINY</th>
         <th scope="col">TELEFON</th>
 
@@ -36,8 +36,8 @@
         <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
         <tr>
             <td>${item.id}</td>
-            <td>${item.name}</td>
             <td>${item.surname}</td>
+            <td>${item.name}</td>
             <td>${newParsedDate}</td>
             <td>${item.phone}</td>
             <td><a href="ClientControl?opt=3&ident=${item.id}">Szczegóły</a></td>

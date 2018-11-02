@@ -1,6 +1,7 @@
 package pl.coderslab.controler;
 
 import pl.coderslab.dao.ClientDao;
+import pl.coderslab.dao.OrderDao;
 import pl.coderslab.model.*;
 import pl.coderslab.dao.CarDao;
 
@@ -171,14 +172,16 @@ public class CarControl extends HttpServlet {
                 }
                 break;
             }case "8": { // HISTORY BY CAR ID
-                String ident = request.getParameter("ident");
+                String ident = request.getParameter("ident"); // ident = carId
                 try {
-                    int ownId = Integer.parseInt(ident);
-                    List<Car> cars = CarDao.loadAllCars_User(ownId);
-                    Client client = ClientDao.loadClientById(ownId);
-                    request.setAttribute("cars", cars);
-                    request.setAttribute("cl", client);
-                    request.getRequestDispatcher("cars/carShowByClient.jsp").forward(request, response);
+                    int carId = Integer.parseInt(ident);
+                    Car car = CarDao.loadCarById(carId);
+                    Client client = ClientDao.loadClientById(car.getOwnerId());
+                    List<Order> orders = OrderDao.loadAllOrders_Car(carId);
+                    request.setAttribute("clients", client);
+                    request.setAttribute("cars", car);
+                    request.setAttribute("orders", orders);
+                    request.getRequestDispatcher("cars/carShowHistory.jsp").forward(request, response);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }

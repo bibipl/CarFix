@@ -85,10 +85,30 @@ public class ClientDao {
 
     public static List<Client> loadAllClients() {
         ArrayList<Client> employees = new ArrayList<Client>();
-        String sql = "SELECT * FROM client";
+        String sql = "SELECT * FROM client ORDER BY surname";
         try {
             Connection conn = DbUtil.getConn();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) employees.add(uploadClient(resultSet));
+            conn.close();
+        } catch (SQLException e) {
+            return null;
+        }
+        return employees;
+    }
+//######################################################################################################################################################
+    // READ ALL "EMPLOYEE"s by name.
+    // Returns Array List of Object "EMPLOYEE" or "NULL"
+//######################################################################################################################################################
+
+    public static List<Client> loadClientsByName(String findHim) {
+        ArrayList<Client> employees = new ArrayList<Client>();
+        String sql = "SELECT * FROM client WHERE surname LIKE ?";
+        try {
+            Connection conn = DbUtil.getConn();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, "%"+findHim+"%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) employees.add(uploadClient(resultSet));
             conn.close();

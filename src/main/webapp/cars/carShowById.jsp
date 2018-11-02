@@ -28,7 +28,8 @@
 
 <table>
     <thead>
-    <td><a href="CarControl?opt=4&ident=${cars.id}">| Modyfikuj | </a></td>
+    <td><a href="CarControl?opt=8&ident=${cars.id}">| Historia | </a></td>
+    <td><a href="CarControl?opt=4&ident=${cars.id}"> Modyfikuj | </a></td>
     <td><a href="CarControl?opt=5&ident=${cars.id}">Usuń |</a></td>
     <td><a href="CarControl?opt=1"> Powrót do listy Samochodów | </a></td>
     </thead>

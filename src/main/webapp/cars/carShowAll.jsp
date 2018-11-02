@@ -43,7 +43,7 @@
             <td>${newParsedDate}</td>
             <td>${item.client.name} ${item.client.surname}</td>
             <td><a href="CarControl?opt=3&ident=${item.car.id}">| S |</a></td>
-            <td><a href="CarControl?opt=3&ident=${item.car.id}">| H |</a></td> // tu zmienić jak zrobię historia.jsp
+            <td><a href="CarControl?opt=8&ident=${item.car.id}">| H |</a></td>
             <td><a href="CarControl?opt=4&ident=${item.car.id}">| M |</a></td>
             <td><a href="CarControl?opt=5&ident=${item.car.id}">| U |</a></td>
         </tr>
