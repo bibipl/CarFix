@@ -23,14 +23,14 @@
     <tr><td>Rok produkcji: </td><td>${cars.yearProd}</td></tr>
     <tr><td>nr Rejestracyjny: </td><td>${cars.registration}</td></tr>
     <tr><td>Następny przegląd: </td><td>${newParsedDate}</td></tr>
-    <tr><td>Właściciel: </td><td>${cars.ownerId}</td></tr>
+    <tr><td>Właściciel: </td><td>${cl.name} ${cl.surname}</td></tr>
 </table>
 
 <table>
     <thead>
-    <td><a href="CarControl?opt=1">| Powrót do listy Samochodów | </a></td>
-    <td><a href="CarControl?opt=4&ident=${cars.id}">Modyfikuj | </a></td>
+    <td><a href="CarControl?opt=4&ident=${cars.id}">| Modyfikuj | </a></td>
     <td><a href="CarControl?opt=5&ident=${cars.id}">Usuń |</a></td>
+    <td><a href="CarControl?opt=1"> Powrót do listy Samochodów | </a></td>
     </thead>
 </table>
 

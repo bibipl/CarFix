@@ -28,9 +28,11 @@
 <h4> Na pewno chcesz usunąć ten samochód z bazy danych ?</h4>
 <table>
     <thead>
-    <td><a href="CarControl?opt=1">| Powrót do listy Samochodów | </a></td>
-    <td><a href="CarControl?opt=6&ident=${cars.id}">| TAK |</a></td>
-    <td><a href="CarControl?opt=1"> NIE |</a></td>
+    <tr>
+        <td><a href="CarControl?opt=6&ident=${cars.id}">| TAK |</a></td>
+        <td><a href="CarControl?opt=1"> NIE |</a></td>
+    </tr>
+    <tr><td><a href="CarControl?opt=1">| Powrót do listy Samochodów | </a></td></tr>
     </thead>
 </table>
 

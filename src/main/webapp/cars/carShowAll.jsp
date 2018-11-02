@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Samochody</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
@@ -26,23 +27,25 @@
         <th scope="col">PRZEGLĄD</th>
         <th scope="col">WŁAŚCICIEL</th>
         <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">HISTORIA</th>
         <th scope="col">MODYFIKUJ</th>
         <th scope="col">USUŃ</th>
     </tr>
     </thead>
-    <c:forEach items="${cars}" var="item">
-        <fmt:parseDate value="${item.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
+    <c:forEach items="${orClEmCa}" var="item">
+        <fmt:parseDate value="${item.car.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
         <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
         <tr>
-            <td>${item.id}</td>
-            <td>${item.model}</td>
-            <td>${item.brand}</td>
-            <td>${item.registration}</td>
+            <td>${item.car.id}</td>
+            <td>${item.car.model}</td>
+            <td>${item.car.brand}</td>
+            <td>${item.car.registration}</td>
             <td>${newParsedDate}</td>
-            <td>${item.ownerId}</td>
-            <td><a href="CarControl?opt=3&ident=${item.id}">Szczegóły</a></td>
-            <td><a href="CarControl?opt=4&ident=${item.id}">Modyfikuj</a></td>
-            <td><a href="CarControl?opt=5&ident=${item.id}">Usuń</a></td>
+            <td>${item.client.name} ${item.client.surname}</td>
+            <td><a href="CarControl?opt=3&ident=${item.car.id}">| S |</a></td>
+            <td><a href="CarControl?opt=3&ident=${item.car.id}">| H |</a></td> // tu zmienić jak zrobię historia.jsp
+            <td><a href="CarControl?opt=4&ident=${item.car.id}">| M |</a></td>
+            <td><a href="CarControl?opt=5&ident=${item.car.id}">| U |</a></td>
         </tr>
     </c:forEach>
 

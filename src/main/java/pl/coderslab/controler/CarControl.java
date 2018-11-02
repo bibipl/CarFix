@@ -1,9 +1,8 @@
 package pl.coderslab.controler;
 
 import pl.coderslab.dao.ClientDao;
-import pl.coderslab.model.Car;
+import pl.coderslab.model.*;
 import pl.coderslab.dao.CarDao;
-import pl.coderslab.model.Client;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -78,9 +77,7 @@ public class CarControl extends HttpServlet {
 
         switch (opt) {
             case "1": { // SHOW ALL CARS
-                List<Car> cars = CarDao.loadAllCars();
-                request.setAttribute("cars", cars);
-                request.getRequestDispatcher("cars/carShowAll.jsp").forward(request, response);
+                ListAllCars(request, response);
                 break;
             }
             case "2": { // ADD CAR
@@ -98,9 +95,6 @@ public class CarControl extends HttpServlet {
                     request.setAttribute("cl", cl);
                     request.getRequestDispatcher("cars/carAdd.jsp").forward(request, response);
                 }
-//                List<Car> cars = CarDao.loadAllCars();
-//                request.setAttribute("cars", cars);
-//                jeśli client id=0 to wyświetl listę klientów, żeby tam dodać samochód.
                 List<Client> cl = ClientDao.loadAllClients();
                 if (cl.size() != 0) {
                     request.setAttribute("cl", cl);
@@ -113,13 +107,16 @@ public class CarControl extends HttpServlet {
             case "3": { // SHOW DETAILS
                 String ident = request.getParameter("ident");
                 Car car =new Car();
+                Client cl = new Client();
                 try {
                     int carId = Integer.parseInt(ident);
                     car = CarDao.loadCarById (carId);
+                    cl = ClientDao.loadClientById(car.getOwnerId());
                 } catch (NumberFormatException a) {
                     a.printStackTrace();
                 }
                 request.setAttribute("cars", car);
+                request.setAttribute("cl", cl);
                 request.getRequestDispatcher("cars/carShowById.jsp").forward(request, response);
                 break;
             }
@@ -165,14 +162,64 @@ public class CarControl extends HttpServlet {
                 try {
                     int ownId = Integer.parseInt(ident);
                     List<Car> cars = CarDao.loadAllCars_User(ownId);
+                    Client client = ClientDao.loadClientById(ownId);
                     request.setAttribute("cars", cars);
-                    request.getRequestDispatcher("cars/carShowAll.jsp").forward(request, response);
+                    request.setAttribute("cl", client);
+                    request.getRequestDispatcher("cars/carShowByClient.jsp").forward(request, response);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }case "8": { // HISTORY BY CAR ID
+                String ident = request.getParameter("ident");
+                try {
+                    int ownId = Integer.parseInt(ident);
+                    List<Car> cars = CarDao.loadAllCars_User(ownId);
+                    Client client = ClientDao.loadClientById(ownId);
+                    request.setAttribute("cars", cars);
+                    request.setAttribute("cl", client);
+                    request.getRequestDispatcher("cars/carShowByClient.jsp").forward(request, response);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
                 break;
             }
 
+        }
+    }
+//####################################################################################################################################
+    // Extracted Method. Creates OrdCarEmpl {Car, Order, Employee} - to disply conviniently
+//####################################################################################################################################
+
+    private static List<OrClEmCa> CreateComboData(List<Car> cars) {
+        List<OrClEmCa> orClEmCas = new ArrayList<>();
+        try {
+            for (Car car : cars) {  // for each car we pack kombo with equivalen car and employee
+                OrClEmCa hybrid = new OrClEmCa();
+                hybrid.setCar(car);
+                hybrid.setClient(ClientDao.loadClientById(car.getOwnerId()));
+                orClEmCas.add(hybrid);
+            }
+        } catch (NumberFormatException a) {
+            a.printStackTrace();
+        }
+        return orClEmCas;
+    }
+//####################################################################################################################################
+    // Extracted Method. Lists all cars.
+//####################################################################################################################################
+
+    private void ListAllCars(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            List<OrClEmCa> orClEmCas = new ArrayList<>(); // pobierzemy kombo dane
+            List<Car> cars = CarDao.loadAllCars(); // najpierw zelecenia
+            orClEmCas = CreateComboData(cars);  // load Combo data - order+equivalen car and employee
+            request.setAttribute("orClEmCa", orClEmCas);
+            request.getRequestDispatcher("cars/carShowAll.jsp").forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }catch (IOException a) {
+            a.printStackTrace();
         }
     }
 

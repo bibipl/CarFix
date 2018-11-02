@@ -31,8 +31,8 @@
         <th scope="col">MARKA</th>
         <th scope="col">REJESTRACJA</th>
         <th scope="col">PRZEGLĄD</th>
-        <th scope="col">WŁAŚCICIEL</th>
         <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">HISTORIA</th>
         <th scope="col">MODYFIKUJ</th>
         <th scope="col">USUŃ</th>
     </tr>
@@ -46,17 +46,17 @@
             <td>${item.brand}</td>
             <td>${item.registration}</td>
             <td>${newParsedDate}</td>
-            <td>${item.ownerId}</td>
-            <td><a href="CarControl?opt=3&ident=${item.id}">Szczegóły</a></td>
-            <td><a href="CarControl?opt=4&ident=${item.id}">Modyfikuj</a></td>
-            <td><a href="CarControl?opt=5&ident=${item.id}">Usuń</a></td>
+            <td><a href="CarControl?opt=3&ident=${item.id}">| S |</a></td>
+            <td><a href="CarControl?opt=3&ident=${item.id}">| H |</a></td> // tu zmienić jak zrobię historia.jsp
+            <td><a href="CarControl?opt=4&ident=${item.id}">| M |</a></td>
+            <td><a href="CarControl?opt=5&ident=${item.id}">| U |</a></td>
         </tr>
     </c:forEach>
 </table>
 <table>
     <thead></thead>
     <tr>
-        <td><a href="CarControl?opt=1">Powrót do listy Samochodów</a></td>
+        <td><a href="ClientControl?opt=1">Powrót do listy Klientów</a></td>
     </tr>
 </table>
 <%@ include file="../footer.jspf" %>
