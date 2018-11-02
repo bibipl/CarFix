@@ -47,18 +47,18 @@ public class OrderControl extends HttpServlet {
                 newOrder.setEmployeeId(Integer.parseInt(request.getParameter("employeeId")));
             newOrder.setProblemDescript(request.getParameter("problemDescript"));
             newOrder.setFixDescript(request.getParameter("fixDescript"));
-            String st = request.getParameter("status");
             if (request.getParameter("status") != null)
             newOrder.setStatus(Integer.parseInt(request.getParameter("status")));
             if (request.getParameter("carId")!=null)
                 newOrder.setCarId(Integer.parseInt(request.getParameter("carId")));
-            String tmp =request.getParameter("valueServ");
             if (request.getParameter("valueServ")!=null)
                 newOrder.setValueServ(Float.parseFloat(request.getParameter("valueServ")));
             if (request.getParameter("valueParts")!=null)
                 newOrder.setValueParts(Float.parseFloat(request.getParameter("valueParts")));
+            newOrder.setHourPrice(EmployeeDao.loadEmployeeById(newOrder.getEmployeeId()).getHourPrice());
             if (request.getParameter("hourPrice")!=null)
                 newOrder.setHourPrice(Float.parseFloat(request.getParameter("hourPrice")));
+
             if (request.getParameter("numOfHours")!=null)
                 newOrder.setNumOfHours(Float.parseFloat(request.getParameter("numOfHours")));
             if ((newOrder.getValueParts() != null) && (newOrder.getHourPrice() != null) && (newOrder.getNumOfHours() != null))
@@ -87,7 +87,12 @@ public class OrderControl extends HttpServlet {
                 break;
 
             }case "2": { // ADD "ORDER"
-                    request.getRequestDispatcher("orders/orderAdd.jsp").forward(request, response);
+                List<Employee> employee = EmployeeDao.loadAllEmployees();
+                List<Car> car = CarDao.loadAllCars();
+//                request.setAttribute("orders", order);
+                request.setAttribute("cars", car);
+                request.setAttribute("employees", employee);
+                request.getRequestDispatcher("orders/orderAdd.jsp").forward(request, response);
                 break;
 
             } case "3": { // SHOW DETAILS
@@ -116,7 +121,11 @@ public class OrderControl extends HttpServlet {
                 } catch (NumberFormatException a) {
                     a.printStackTrace();
                 }
+                List<Employee> employee = EmployeeDao.loadAllEmployees();
+                List<Car> car = CarDao.loadAllCars();
                 request.setAttribute("orders", order);
+                request.setAttribute("cars", car);
+                request.setAttribute("employees", employee);
                 request.getRequestDispatcher("orders/orderModif.jsp").forward(request, response);
                 break;
 

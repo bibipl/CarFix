@@ -25,8 +25,29 @@
 <form method="post" action="OrderControl">
     <p>Numer Zlecenia : ${orders.id}</p>
     <input type="hidden" name="orderId" value="${orders.id}">
-    <label>Identyfikator samochodu</label><input type="number" name="carId" value="${orders.carId}"><br>
-    <label>Pracownik</label><input type="number" name="employeeId" value=${orders.employeeId}><br>
+    <label for="car">Samochód</label>
+    <select id="car" name="carId" value="${orders.carId}">
+        <c:forEach items="${cars}" var="item">
+            <c:if test="${item.id==orders.carId}">
+                <option selected value="${item.id}">${item.model} ${item.brand} | ${item.registration}</option>
+            </c:if>
+            <c:if test="${item.id!=orders.employeeId}">
+                <option value="${item.id}">${item.model} ${item.brand} | ${item.registration}</option>
+            </c:if>
+        </c:forEach>
+    </select> <br>
+    <label for="service">Serwisant</label>
+    <select id="service" name="employeeId" value="${orders.employeeId}">
+        <c:forEach items="${employees}" var="item">
+            <c:if test="${item.id==orders.employeeId}">
+                <option selected value="${item.id}">${item.name} ${item.surname}</option>
+                <%--<c:set var="eId" value="${item.hourPrice}"/>--%>
+            </c:if>
+            <c:if test="${item.id!=orders.employeeId}">
+                <option value="${item.id}">${item.name} ${item.surname}</option>
+            </c:if>
+        </c:forEach>
+     </select> <br>
     <c:if test="${not empty orders.planStartDate}">
         <label>Planowane rozpoczęcie naprawy</label><input type="date" name="planStartDate" value="${orders.planStartDate}"><br>
     </c:if>
@@ -76,7 +97,7 @@
     <label>Opis Naprawy</label><input type="text" name="fixDescript" value="${orders.fixDescript}"><br>
     <label>Koszt części</label><input type="number" name="valueParts" value="${orders.valueParts}" step="0.01"><br>
     <label>Liczba roboczogodzin</label><input type="number" name="numOfHours" value="${orders.numOfHours}" step="0.1"><br>
-    <label>Stawka godzinowa</label><input type="number" name="hourPrice" value="${orders.hourPrice}" step="0.01"><br>
+    <%--<label>Stawka godzinowa</label><input type="number" name="hourPrice" value="${eId}" placeholder="${eId}" step="0.01"><br>--%>
     <input type="hidden" name="valueServ" value="${orders.valueServ}">
     <input type="submit" value="Zmień"><br>
 </form>

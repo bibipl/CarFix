@@ -16,10 +16,20 @@
 <%@ include file="../header.jspf" %>
 <form method="post" action="OrderControl">
     <input type="hidden" name="ordId" value=${0}>
-    <label>Identyfikator samochodu</label><input type="number" name="carId"><br>
+    <label for="car">Samochód</label>
+    <select id="car" name="carId">
+        <c:forEach items="${cars}" var="item">
+            <option value="${item.id}">${item.model} ${item.brand} | ${item.registration}</option>
+        </c:forEach>
+    </select> <br>
     <label>Opis Problemu</label><input type="text" name="problemDescript"><br>
     <label>Planowane rozpoczęcie naprawy</label><input type="date" name="planStartDate"><br>
-    <label>Pracownik</label><input type="number" name="employeeId"><br>
+    <label for="service">Serwisant</label>
+    <select id="service" name="employeeId">
+        <c:forEach items="${employees}" var="item">
+            <option selected value="${item.id}">${item.name} ${item.surname}</option>
+        </c:forEach>
+    </select> <br>
     <label for="status">Status</label>
     <select id="status" name="status" value="1">
         <option selected value="1">Przyjęty</option>
@@ -32,10 +42,8 @@
 </form>
 <table>
     <thead>
-    <td><a href="OrderControl?opt=1">| Powrót do listy Zleceń | </a></td>
-    <td><a href="OrderControl?opt=3&ident=${item.id}">Szczegóły | </a></td>
-    <td><a href="OrderControl?opt=4&ident=${item.id}">Modyfikuj | </a></td>
-    <td><a href="OrderControl?opt=5&ident=${item.id}">Usuń |</a></td>
+    <td><a href="OrderControl?opt=1">| Powrót do listy ZLECEŃ | </a></td>
+    <td><a href="CarControl?opt=2">Dodaj nowy SAMOCHÓD | </a></td>
     </thead>
 </table>
 <%@ include file="../footer.jspf" %>
