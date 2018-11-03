@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +24,7 @@ public class ClientControl extends HttpServlet {
         response.setContentType("text/html; charset=utf-8");
         String clId = request.getParameter("clId");
         String src = request.getParameter("src");
+        String birth =request.getParameter("birthDate");
         if (src != null && src!="") { // search client
             List<Client> clients = ClientDao.loadClientsByName(src);
             request.setAttribute("cl", clients);
@@ -38,7 +40,11 @@ public class ClientControl extends HttpServlet {
 
             newClient.setName(request.getParameter("name"));
             newClient.setSurname(request.getParameter("surname"));
-            newClient.setBirthDate(LocalDate.parse(request.getParameter("birthDate").toString()));
+            try {
+                newClient.setBirthDate(LocalDate.parse(request.getParameter("birthDate").toString()));
+            } catch (DateTimeParseException e) {
+                // null allowed
+            }
             newClient.setPhone(request.getParameter("phone"));
 
             ClientDao.saveToDB(newClient); // if newClient.id=0 - new one if !=0 - old one to modify

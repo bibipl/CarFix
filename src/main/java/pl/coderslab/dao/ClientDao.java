@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,11 @@ public class ClientDao {
                 PreparedStatement preparedStatement = conn.prepareStatement(sql, generatedColumns);
                 preparedStatement.setString(1, cl.getName());
                 preparedStatement.setString(2, cl.getSurname());
-                preparedStatement.setString(3, java.sql.Date.valueOf(cl.getBirthDate()).toString());
+                if (cl.getBirthDate() != null) {
+                    preparedStatement.setString(3, java.sql.Date.valueOf(cl.getBirthDate()).toString());
+                } else {
+                    preparedStatement.setString(3, null);
+                }
                 preparedStatement.setString(4, cl.getPhone());
                 preparedStatement.executeUpdate();
                 ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -46,7 +51,11 @@ public class ClientDao {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, cl.getName());
             preparedStatement.setString(2, cl.getSurname());
-            preparedStatement.setString(3, java.sql.Date.valueOf(cl.getBirthDate()).toString());
+            if (cl.getBirthDate() != null) {
+                preparedStatement.setString(3, java.sql.Date.valueOf(cl.getBirthDate()).toString());
+            } else {
+                preparedStatement.setString(3, null);
+            }
             preparedStatement.setString(4, cl.getPhone());
             preparedStatement.setInt(5, cl.getId());
             preparedStatement.executeUpdate();
@@ -151,7 +160,11 @@ public class ClientDao {
             loadedClient.setId(resultSet.getInt("id"));
             loadedClient.setName(resultSet.getString("name"));
             loadedClient.setSurname(resultSet.getString("surname"));
-            loadedClient.setBirthDate(resultSet.getDate("birthDate").toLocalDate());
+            if (resultSet.getString("birthDate") != null) {
+                loadedClient.setBirthDate(resultSet.getDate("birthDate").toLocalDate());
+            } else {
+                loadedClient.setBirthDate (null);
+            }
             loadedClient.setPhone(resultSet.getString("phone"));
         } catch (SQLException e) {
             return null;
