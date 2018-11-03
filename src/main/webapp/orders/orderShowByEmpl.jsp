@@ -21,8 +21,8 @@
 <table>
     <thead>
     <th scope="col">| ID: ${empl.id} | </th>
-    <th scope="col"> Imię: ${empl.name} | </th>
-    <th scope="col"> Nazwisko: ${empl.surname} |</th>
+    <th scope="col">${empl.name} </th>
+    <th scope="col">${empl.surname} |</th>
     </thead>
 </table>
 
@@ -38,15 +38,16 @@
             <td>${item.employee.name}  ${item.employee.surname}</td>
             <%@ include file="dateTDItem.jspf" %>
             <%@ include file="statusItem.jspf" %>
-            <td><a href="OrderControl?opt=3&ident=${item.order.id}">Szczegóły</a></td>
-            <td><a href="OrderControl?opt=4&ident=${item.order.id}">Modyfikuj</a></td>
-            <td><a href="OrderControl?opt=5&ident=${item.order.id}">Usuń</a></td>
+            <td><a href="OrderControl?opt=3&ident=${item.order.id}">| D |</a></td>
+            <td><a href="OrderControl?opt=4&ident=${item.order.id}">| M |</a></td>
+            <td><a href="OrderControl?opt=5&ident=${item.order.id}">| U |</a></td>
         </tr>
     </c:forEach>
 </table>
 <table>
     <th></th>
-    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy Serwisantów</a></td></tr>
+    <tr><td><a href="EmployeeControl?opt=1">POWRÓT SERWISANCI</a></td>
+    <td><a href="EmployeeControl?opt=1">POWRÓT ZLECENIA</a></td></tr>
 </table>
 
 <%@ include file="../footer.jspf" %>

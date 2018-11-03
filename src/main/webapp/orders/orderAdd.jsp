@@ -30,6 +30,7 @@
             <option selected value="${item.id}">${item.name} ${item.surname}</option>
         </c:forEach>
     </select> <br>
+    <label>Cena naprawy</label><input type="number" name="valueServ" step="0.01"><br>
     <label for="status">Status</label>
     <select id="status" name="status" value="1">
         <option selected value="1">Przyjęty</option>
@@ -40,8 +41,8 @@
 </form>
 <table>
     <thead>
-    <td><a href="OrderControl?opt=1">| Powrót do listy ZLECEŃ | </a></td>
-    <td><a href="CarControl?opt=2">Dodaj nowy SAMOCHÓD | </a></td>
+    <td><a href="OrderControl?opt=1">| POWRÓT ZLECENIA | </a></td>
+    <td><a href="CarControl?opt=2">DODAJ SAMOCHÓD | </a></td>
     </thead>
 </table>
 <%@ include file="../footer.jspf" %>

@@ -26,6 +26,7 @@ public class OrderControl extends HttpServlet {
 //####################################################################################################################################
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String orderId = request.getParameter("orderId");
         int ordId;
@@ -97,9 +98,9 @@ public class OrderControl extends HttpServlet {
 
             if (request.getParameter("numOfHours")!=null)
                 newOrder.setNumOfHours(Float.parseFloat(request.getParameter("numOfHours")));
-            if ((newOrder.getValueParts() != null) && (newOrder.getHourPrice() != null) && (newOrder.getNumOfHours() != null))
+            /*if ((newOrder.getValueParts() != null) && (newOrder.getHourPrice() != null) && (newOrder.getNumOfHours() != null))
                 newOrder.setValueServ(newOrder.getValueParts()+newOrder.getHourPrice()*newOrder.getNumOfHours());
-            else newOrder.setValueServ((float)0);
+            else newOrder.setValueServ((float)0);*/  // delete it. it sholud be pricce paid by client
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -114,6 +115,7 @@ public class OrderControl extends HttpServlet {
 //####################################################################################################################################
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String opt = request.getParameter("opt");
 

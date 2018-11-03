@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Usuwanie Zlecenia</title>
+    <title>USUŃ</title>
 </head>
 <body>
 <%@ include file="../header.jspf" %>
@@ -65,7 +65,7 @@
 <h4> Na pewno chcesz usunąć to ZLECENIE z bazy danych ?</h4>
 <table>
     <thead>
-    <td><a href="OrderControl?opt=1">| Powrót do listy ZLECEŃ | </a></td>
+    <td><a href="OrderControl?opt=1">| POWRÓT ZLECENIA | </a></td>
     <td><a href="OrderControl?opt=6&ident=${orders.id}">| TAK |</a></td>
     <td><a href="OrderControl?opt=1"> NIE |</a></td>
     </thead>

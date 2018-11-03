@@ -18,11 +18,13 @@
 <table>
     <thead></thead>
     <tr>
-        <td>
+
             <form action="ClientControl" method="post">
                 <input type="text" name="src" placeholder="nazwisko"><input type="submit" value=">">
             </form>
-        </td>
+        
+    </tr>
+    <tr>
         <td><a href="index.jsp">[MENU] |</a></td>
         <td><a href="ClientControl?opt=1">KLIENCI | </a></td>
         <td><a href="OrderControl?opt=1">ZLECENIA |</a></td>

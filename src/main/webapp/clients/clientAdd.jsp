@@ -22,7 +22,7 @@
 </form>
 <table>
     <thead>
-    <td><a href="ClientControl?opt=1">| Powrót do listy Klientów | </a></td>
+    <td><a href="ClientControl?opt=1">| POWRÓT KLIENCI | </a></td>
     </thead>
 </table>
 <%@ include file="../footer.jspf" %>

@@ -27,7 +27,9 @@
 <br>
 <table>
     <th></th>
-    <tr><td><a href="EmployeeControl?opt=1">Powrót do listy Serwisantów</a></td></tr>
+    <tr><td><a href="EmployeeControl?opt=7&ident=${empl.id}">POWRÓT ZLECENIA SERWISANTA</a></td>
+    <td><a href="EmployeeControl?opt=1">POWRÓT SERWISANCI</a></td>
+    <td><a href="OrderControl?opt=1">POWRÓT ZLECENIA</a></td></tr>
 </table>
 <%@ include file="../footer.jspf" %>
 </body>

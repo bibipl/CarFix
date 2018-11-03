@@ -19,6 +19,7 @@ import java.util.List;
 @WebServlet(name = "ClientControl", urlPatterns = "/ClientControl")
 public class ClientControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String clId = request.getParameter("clId");
         String src = request.getParameter("src");
@@ -53,6 +54,7 @@ public class ClientControl extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String opt = request.getParameter("opt");
         switch (opt) {

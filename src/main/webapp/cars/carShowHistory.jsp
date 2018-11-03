@@ -30,7 +30,7 @@
         <th scope="col">DATA ROZPOCZĘCIA NAPRAWY</th>
         <th scope="col">DATA ZAKOŃCZENIA NAPRAWY</th>
         <th scope="col">OPIS NAPRAWY</th>
-        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">DANE</th>
     </tr>
     </thead>
         <c:forEach items="${orders}" var="item">

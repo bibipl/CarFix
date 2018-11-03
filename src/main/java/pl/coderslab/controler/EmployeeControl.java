@@ -22,6 +22,7 @@ import java.util.List;
 @WebServlet(name = "EmployeeControl", urlPatterns ="/EmployeeControl")
 public class EmployeeControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String emplId = request.getParameter("emplId");
         int eId=0;  // we asume - does not exist (create)
@@ -56,6 +57,7 @@ public class EmployeeControl extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String opt = request.getParameter("opt");
         switch (opt) {
@@ -126,7 +128,7 @@ public class EmployeeControl extends HttpServlet {
                     e.printStackTrace();
                 }
                 break;
-            }case "7": { // Show all ORDERS by EMPLOYEE
+            }case "7": { // Show all ORDERS by EMPLOYEE status - working
                 String ident = request.getParameter("ident"); // ident = empl id
                 Employee empl =new Employee();
                 try {
@@ -134,10 +136,33 @@ public class EmployeeControl extends HttpServlet {
                     List<OrdCarEmpl> ordCarEmpls = new ArrayList<>();
                     List<Order> orders = OrderDao.loadAllOrders_Empl(empl.getId());
                     for (Order ord : orders) {
-                    OrdCarEmpl hybrid = new OrdCarEmpl();
-                    hybrid.setOrder(ord);
-                    hybrid.setCar(CarDao.loadCarById(ord.getCarId()));
-                        ordCarEmpls.add(hybrid);
+                        // Here if we want all orders of emloyee just erase "i
+                        if (ord.getStatus()==3) { // w naprawie
+                            OrdCarEmpl hybrid = new OrdCarEmpl();
+                            hybrid.setOrder(ord);
+                            hybrid.setCar(CarDao.loadCarById(ord.getCarId()));
+                            ordCarEmpls.add(hybrid);
+                        }
+                    }
+                    request.setAttribute("ordCarEmpl", ordCarEmpls);
+                    request.setAttribute("empl", empl);
+                    request.getRequestDispatcher("orders/orderShowByEmpl.jsp").forward(request, response);
+                } catch (NumberFormatException a) {
+                    a.printStackTrace();
+                }
+                break;
+            }case "8": { // Show all ORDERS by EMPLOYEE - status - no matter
+                String ident = request.getParameter("ident"); // ident = empl id
+                Employee empl =new Employee();
+                try {
+                    empl = EmployeeDao.loadEmployeeById (Integer.parseInt(ident));
+                    List<OrdCarEmpl> ordCarEmpls = new ArrayList<>();
+                    List<Order> orders = OrderDao.loadAllOrders_Empl(empl.getId());
+                    for (Order ord : orders) {
+                            OrdCarEmpl hybrid = new OrdCarEmpl();
+                            hybrid.setOrder(ord);
+                            hybrid.setCar(CarDao.loadCarById(ord.getCarId()));
+                            ordCarEmpls.add(hybrid);
                     }
                     request.setAttribute("ordCarEmpl", ordCarEmpls);
                     request.setAttribute("empl", empl);

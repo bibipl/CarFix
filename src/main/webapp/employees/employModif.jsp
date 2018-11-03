@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>MODIFY</title>
+    <meta charset="utf-8">
 </head>
 <body>
 <%@ include file="../header.jspf" %>

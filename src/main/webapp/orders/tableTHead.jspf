@@ -17,7 +17,7 @@
     <th scope="col">START</th>
     <th scope="col">KONIEC</th>
     <th scope="col">STATUS</th>
-    <th scope="col">SZCZEGÓŁY</th>
+    <th scope="col">DANE</th>
     <th scope="col">MODYFIKUJ</th>
     <th scope="col">USUŃ</th>
 </tr>

@@ -26,7 +26,7 @@
 <table>
     <tr><td>ID</td><td>${orders.id}</td></tr>
     <tr><td>Samochód</td><td>${cars.model} | ${cars.brand} | ${cars.registration}</td></tr>
-    <tr><td>Pracownik</td><td>${employees.name} | ${employees.surname}</td></tr>
+    <tr><td>Pracownik</td><td>${employees.name} ${employees.surname}</td></tr>
     <c:choose>
         <c:when test="${orders.status==1}">
             <tr><td>Status naprawy</td><td>| Przyjęty |</td></tr>
@@ -65,9 +65,10 @@
 </table>
 <table>
     <thead>
-    <td><a href="OrderControl?opt=1">| Powrót do listy ZLECEŃ | </a></td>
-    <td><a href="OrderControl?opt=4&ident=${orders.id}">Modyfikuj | </a></td>
-    <td><a href="OrderControl?opt=5&ident=${orders.id}">Usuń |</a></td>
+    <tr><td><a href="EmployeeControl?opt=7&ident=${employees.id}">ZLECENIA SERWISANTA</a></td>
+    <td><a href="OrderControl?opt=1">| WSZYSTKIE ZLECENIA | </a></td>
+    <td><a href="OrderControl?opt=4&ident=${orders.id}">MODYFIKUJ ZLECENIE | </a></td>
+    <td><a href="OrderControl?opt=5&ident=${orders.id}">USUŃ ZLECENIE |</a></td>
     </thead>
 </table>
 

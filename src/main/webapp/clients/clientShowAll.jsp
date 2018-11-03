@@ -19,13 +19,13 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><a href="ClientControl?opt=2">| + | </a><a href="ClientControl?opt=2"> | SRC |</a></th>
+        <th scope="col"><a href="ClientControl?opt=2">| + |</a></th>
         <th scope="col">NAZWISKO</th>
         <th scope="col">IMIĘ</th>
         <th scope="col">URODZINY</th>
         <th scope="col">TELEFON</th>
 
-        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">DANE</th>
         <th scope="col">SAMOCHODY</th>
         <th scope="col">MODYFIKUJ</th>
         <th scope="col">USUŃ</th>
@@ -40,13 +40,13 @@
             <td>${item.name}</td>
             <td>${newParsedDate}</td>
             <td>${item.phone}</td>
-            <td><a href="ClientControl?opt=3&ident=${item.id}">Szczegóły</a></td>
-            <td><a href="ClientControl?opt=7&ident=${item.id}">Samochody</a></td>
-            <td><a href="ClientControl?opt=4&ident=${item.id}">Modyfikuj</a></td>
-            <td><a href="ClientControl?opt=5&ident=${item.id}">Usuń</a></td>
+            <td><a href="ClientControl?opt=3&ident=${item.id}">| D |</a></td>
+            <td><a href="ClientControl?opt=7&ident=${item.id}">| S |</a></td>
+            <td><a href="ClientControl?opt=4&ident=${item.id}">| M |</a></td>
+            <td><a href="ClientControl?opt=5&ident=${item.id}">| U |</a></td>
         </tr>
     </c:forEach>
-
+    <tr><td><a href="ClientControl?opt=1">| POWRÓT KLIENCI |</a></td></tr>
 </table>
 <%@ include file="../footer.jspf" %>
 </body>

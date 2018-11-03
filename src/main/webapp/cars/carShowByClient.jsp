@@ -31,7 +31,7 @@
         <th scope="col">MARKA</th>
         <th scope="col">REJESTRACJA</th>
         <th scope="col">PRZEGLĄD</th>
-        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">DANE</th>
         <th scope="col">HISTORIA</th>
         <th scope="col">MODYFIKUJ</th>
         <th scope="col">USUŃ</th>
@@ -46,7 +46,7 @@
             <td>${item.brand}</td>
             <td>${item.registration}</td>
             <td>${newParsedDate}</td>
-            <td><a href="CarControl?opt=3&ident=${item.id}">| S |</a></td>
+            <td><a href="CarControl?opt=3&ident=${item.id}">| D |</a></td>
             <td><a href="CarControl?opt=8&ident=${item.id}">| H |</a></td>
             <td><a href="CarControl?opt=4&ident=${item.id}">| M |</a></td>
             <td><a href="CarControl?opt=5&ident=${item.id}">| U |</a></td>

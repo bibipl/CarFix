@@ -1,12 +1,11 @@
 package pl.coderslab.dao;
 
 import pl.coderslab.model.Order;
+import pl.coderslab.model.Report1;
 import pl.coderslab.utils.DbUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,7 +177,49 @@ public class OrderDao {
         String sql = "SELECT * FROM repair WHERE employee_id=?";
         return askSQL(emplId, sql);
     }
+//######################################################################################################################################################
+    // DAO LOAD "ORDERS" BY "PERIOD OF TIME"
+    // Returns list of all cars of Owner(ID).
+//######################################################################################################################################################
 
+    public static List<Order> loadOrders_PeriodEnd(String dateS, String dateE) {
+        String sql = "SELECT * FROM repair WHERE real_end_date>=? AND real_end_date<=?";
+        List<Order> temp = new ArrayList<>();
+        try {
+            Connection conn = DbUtil.getConn();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, dateS);
+            preparedStatement.setString(2, dateE);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) temp.add(uploadOrder(resultSet));
+            conn.close();
+        } catch (SQLException e) {
+            return null;
+        }
+        return temp;
+    }
+
+//######################################################################################################################################################
+    // DAO LOAD "ORDERS" BY "PERIOD OF TIME"
+    // Returns list of all cars of Owner(ID).
+//######################################################################################################################################################
+
+    public static List<Order> loadOrders_PeriodStart(String dateS, String dateE) {
+        String sql = "SELECT * FROM repair WHERE real_start_date>=? AND real_start_date<=?";
+        List<Order> temp = new ArrayList<>();
+        try {
+            Connection conn = DbUtil.getConn();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, dateS);
+            preparedStatement.setString(2, dateE);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) temp.add(uploadOrder(resultSet));
+            conn.close();
+        } catch (SQLException e) {
+            return null;
+        }
+        return temp;
+    }
 //######################################################################################################################################################
     // DAO ask SQL - extractet to ask sql question "sql" with "id" parameter and return list of matching "Order"
     // Returns list of matching objects "ORDER"
@@ -234,4 +275,6 @@ public class OrderDao {
     }
 
 //######################################################################################################################################################
+
+
 }

@@ -96,6 +96,7 @@
     </select> <br>
     <label>Opis Problemu</label><input type="text" name="problemDescript" value="${orders.problemDescript}"><br>
     <label>Opis Naprawy</label><input type="text" name="fixDescript" value="${orders.fixDescript}"><br>
+    <label>Cena naprawy</label><input type="number" name="valueServ" value="${orders.valueServ}" step="0.01"><br>
     <label>Koszt części</label><input type="number" name="valueParts" value="${orders.valueParts}" step="0.01"><br>
     <label>Liczba roboczogodzin</label><input type="number" name="numOfHours" value="${orders.numOfHours}" step="0.1"><br>
     <%--<label>Stawka godzinowa</label><input type="number" name="hourPrice" value="${eId}" placeholder="${eId}" step="0.01"><br>--%>
@@ -105,8 +106,8 @@
 
 <table>
     <thead>
-    <td><a href="OrderControl?opt=1">| Powrót do listy ZLECEŃ | </a></td>
-    <td><a href="OrderControl?opt=5&ident=${orders.id}">Usuń |</a></td>
+    <td><a href="OrderControl?opt=1">| POWRÓT ZLECENIA | </a></td>
+    <td><a href="OrderControl?opt=5&ident=${orders.id}">USUŃ |</a></td>
     </thead>
 </table>
 

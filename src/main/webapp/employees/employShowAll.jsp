@@ -23,7 +23,8 @@
         <th scope="col">IMIĘ</th>
         <th scope="col">NAZWISKO</th>
         <th scope="col">STAWKA</th>
-        <th scope="col">ZLECENIA</th>
+        <th scope="col">NAPRAWIA</th>
+        <th scope="col">HISTORIA</th>
         <th scope="col">DANE</th>
         <th scope="col">MODYFIKUJ</th>
         <th scope="col">USUN</th>
@@ -36,17 +37,18 @@
             <td>${item.name}</td>
             <td>${item.surname}</td>
             <td>${item.hourPrice}</td>
-            <td><a href="EmployeeControl?opt=7&ident=${item.id}">Zlecenia</a></td>
-            <td><a href="EmployeeControl?opt=3&ident=${item.id}">Dane</a></td>
-            <td><a href="EmployeeControl?opt=4&ident=${item.id}">Modyfikuj</a></td>
-            <td><a href="EmployeeControl?opt=5&ident=${item.id}">Usuń</a></td>
+            <td><a href="EmployeeControl?opt=7&ident=${item.id}">| N |</a></td>
+            <td><a href="EmployeeControl?opt=8&ident=${item.id}">| W |</a></td>
+            <td><a href="EmployeeControl?opt=3&ident=${item.id}">| D |</a></td>
+            <td><a href="EmployeeControl?opt=4&ident=${item.id}">| M |</a></td>
+            <td><a href="EmployeeControl?opt=5&ident=${item.id}">| U |</a></td>
         </tr>
     </c:forEach>
 
 </table>
 <table>
     <th></th>
-    <tr><td><a href="EmployeeControl?opt=1">Lista wszystkich Serwisantów</a></td></tr>
+    <tr><td><a href="EmployeeControl?opt=1">LISTA SERWISANTÓW</a></td></tr>
 </table>
 <%@ include file="../footer.jspf" %>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>

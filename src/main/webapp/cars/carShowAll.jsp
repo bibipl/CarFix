@@ -26,7 +26,7 @@
         <th scope="col">REJESTRACJA</th>
         <th scope="col">PRZEGLĄD</th>
         <th scope="col">WŁAŚCICIEL</th>
-        <th scope="col">SZCZEGÓŁY</th>
+        <th scope="col">DANE</th>
         <th scope="col">HISTORIA</th>
         <th scope="col">MODYFIKUJ</th>
         <th scope="col">USUŃ</th>
@@ -42,7 +42,7 @@
             <td>${item.car.registration}</td>
             <td>${newParsedDate}</td>
             <td>${item.client.name} ${item.client.surname}</td>
-            <td><a href="CarControl?opt=3&ident=${item.car.id}">| S |</a></td>
+            <td><a href="CarControl?opt=3&ident=${item.car.id}">| D |</a></td>
             <td><a href="CarControl?opt=8&ident=${item.car.id}">| H |</a></td>
             <td><a href="CarControl?opt=4&ident=${item.car.id}">| M |</a></td>
             <td><a href="CarControl?opt=5&ident=${item.car.id}">| U |</a></td>

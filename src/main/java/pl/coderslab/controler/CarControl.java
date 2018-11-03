@@ -23,6 +23,7 @@ public class CarControl extends HttpServlet {
 //####################################################################################################################################
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String carId = request.getParameter("carId");
         String ownerId = request.getParameter("ownerId");
@@ -73,6 +74,7 @@ public class CarControl extends HttpServlet {
 //####################################################################################################################################
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String opt = request.getParameter("opt");
 
