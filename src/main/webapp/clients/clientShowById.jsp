@@ -11,42 +11,42 @@
 <html>
 <head>
     <title>Klient-Szczegóły</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
 <%@ include file="../header.jspf" %>
-<fmt:parseDate value="${cl.birthDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
-<fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
-<table>
-    <thead></thead>
-    <tr><td>Numer: </td><td>${cl.id}</td></tr>
-    <tr><td>Imię: </td><td>${cl.name}</td></tr>
-    <tr><td>Nazwisko: </td><td>${cl.surname}</td></tr>
-    <tr><td>Data urodzin: </td><td>${newParsedDate}</td></tr>
-    <tr><td>Telefon: </td><td>${cl.phone}</td></tr>
-</table>
-<br>
-<table>
-    <th></th>
+<c:if test="${not empty cl.birthDate}">
+    <fmt:parseDate value="${cl.birthDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
+    <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
+</c:if>
+<table class="table">
+    <thead>
     <tr>
-        <td><a href="ClientControl?opt=4&ident=${cl.id}">Modyfikuj Klienta| </a></td>
-        <td><a href="ClientControl?opt=5&ident=${cl.id}">Usuń Klienta|</a></td>
+        <th scope="col">POZYCJA</th>
+        <th scope="col">DANE KLIENTA</th>
     </tr>
-</table>
-<br>
-<table>
-    <thead></thead>
-    <tr>
-        <td> <a href="CarControl?opt=2&ident=${cl.id}">Dodaj Samochód | </a>  </td>
-        <td> <a href="ClientControl?opt=1">Lista zleceń | </a>  </td>
-        <td> <a href="CarControl?opt=7&ident=${cl.id}">Lista samochodów | </a></td>
-    </tr>
-</table>
-<br>
-<table>
-    <th></th>
-    <tr><td><a href="ClientControl?opt=1">| POWRÓT KLIENCI |</a></td></tr>
-</table>
+    </thead>
+    <tr><td>NUMER</td><td>${cl.id}</td></tr>
+    <tr><td>IMIĘ</td><td>${cl.name}</td></tr>
+    <tr><td>NAZWISKO</td><td>${cl.surname}</td></tr>
+    <tr><td>DATA URODZENIA</td><td>${newParsedDate}</td></tr>
+    <tr><td>TELEFON</td><td>${cl.phone}</td></tr>
 
+    <tr>
+        <td>
+            <a href="ClientControl?opt=1">| POWRÓT KLIENCI | </a>
+            <a href="ClientControl?opt=4&ident=${cl.id}">MODYFIKACJA KLIENTA | </a>
+            <a href="ClientControl?opt=5&ident=${cl.id}">USUŃ KLIENTA |</a>
+        </td>
+        <td>
+            <a href="CarControl?opt=2&ident=${cl.id}">| DODAJ SAMOCHÓD | </a>
+            <a href="ClientControl?opt=1">LISTA ZLECEŃ | </a>
+            <a href="CarControl?opt=7&ident=${cl.id}">LISTA SAMOCHODÓW | </a>
+        </td>
+    </tr>
+</table>
 <%@ include file="../footer.jspf" %>
 </body>
 </html>

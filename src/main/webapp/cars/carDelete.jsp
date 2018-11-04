@@ -17,8 +17,10 @@
 </head>
 <body>
 <%@ include file="../header.jspf" %>
-<fmt:parseDate value="${cars.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
-<fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
+<c:if test="${not empty cars.nextReview}">
+    <fmt:parseDate value="${cars.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
+    <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
+</c:if>
 <table class="table">
 <thead>
     <tr>

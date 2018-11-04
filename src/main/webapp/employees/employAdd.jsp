@@ -32,7 +32,7 @@
       <tr><td>UWAGI</td><td><input type="text" name="note"></td></tr>
       <tr><td>STAWKA GODZINOWA</td><td><input type="number" name="hourPrice" step="0.01"></td></tr>
       <tr>
-          <td><a href="EmployeeControl?opt=1">| Powrót do listy Serwisantów | </a></td>
+          <td><a href="EmployeeControl?opt=1">| POWRÓT DO LISTY SERWISANTÓW | </a></td>
           <td><input type="submit" value="DODAJ NOWEGO PRACOWNIKA"></td>
       </tr>
 

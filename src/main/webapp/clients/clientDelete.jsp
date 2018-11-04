@@ -10,33 +10,43 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>USUŃ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
 <%@ include file="../header.jspf" %>
-<fmt:parseDate value="${cl.birthDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
-<fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
-<table>
-    <thead></thead>
-    <tr><td>Numer: </td><td>${cl.id}</td></tr>
-    <tr><td>Imię: </td><td>${cl.name}</td></tr>
-    <tr><td>Nazwisko: </td><td>${cl.surname}</td></tr>
-    <tr><td>Data Urodzenia: </td><td>${newParsedDate}</td></tr>
-    <tr><td>Telefon: </td><td>${cl.phone}</td></tr>
-</table>
-<h4> Na pewno chcesz usunąć tego klienta z bazy danych ?</h4>
-<h4> Usunięcie będzie możliwe, jeżeli nie posiada on żadnego samochodu ?</h4>
-<h4> Jeżeli posiada to najpierw usuń lub zmień przynależność smochodów tego klienta</h4>
-<table>
+<c:if test="${not empty cl.birthDate}">
+    <fmt:parseDate value="${cl.birthDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
+    <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
+</c:if>
+<c:if test="${not empty cl.birthDate}">
+    ${var}
+</c:if>
+
+<table class="table">
     <thead>
-    <td><a href="ClientControl?opt=6&ident=${cl.id}">TAK</a></td>
-    <td><a href="ClientControl?opt=1">NIE</a></td>
+    <tr>
+        <th scope="col">POZYCJA</th>
+        <th scope="col">DANE KLIENTA</th>
+    </tr>
     </thead>
-</table>
-<br>
-<table>
-    <th></th>
-    <tr><td><a href="ClientControl?opt=1">| POWRÓT KLIENCI |</a></td></tr>
+    <tr><td>NUMER</td><td>${cl.id}</td></tr>
+    <tr><td>IMIĘ</td><td>${cl.name}</td></tr>
+    <tr><td>NAZWISKO</td><td>${cl.surname}</td></tr>
+    <tr><td>DATA URODZENIA</td><td>${newParsedDate}</td></tr>
+    <tr><td>TELEFON</td><td>${cl.phone}</td></tr>
+    <br>
+    <tr>
+        <td>Na pewno chcesz usunąć tego klienta z bazy danych ?</td>
+        <td><a href="ClientControl?opt=6&ident=${cl.id}">| TAK | </a><a href="ClientControl?opt=1">NIE|</a></td>
+    </tr>
+    <br>
+    <tr>
+        <td><a href="ClientControl?opt=1">| POWRÓT KLIENCI |</a></td>
+        <td></td>
+    </tr>
 </table>
 <%@ include file="../footer.jspf" %>
 </body>
