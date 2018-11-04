@@ -11,28 +11,37 @@
 <html>
 <head>
     <title>Szczegóły samochodu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 </head>
 <body>
 <%@ include file="../header.jspf" %>
-<fmt:parseDate value="${cars.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
-<fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
-<table>
-    <thead></thead>
-    <tr><td>Model: </td><td>${cars.model}</td></tr>
-    <tr><td>Marka: </td><td>${cars.brand}</td></tr>
-    <tr><td>Rok produkcji: </td><td>${cars.yearProd}</td></tr>
-    <tr><td>nr Rejestracyjny: </td><td>${cars.registration}</td></tr>
-    <tr><td>Następny przegląd: </td><td>${newParsedDate}</td></tr>
-    <tr><td>Właściciel: </td><td>${cl.name} ${cl.surname}</td></tr>
-</table>
-
-<table>
+<fmt:parseDate value="${cars.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date"/>
+<fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy"/>
+<table class="table">
     <thead>
-    <td><a href="CarControl?opt=8&ident=${cars.id}">| Historia | </a></td>
-    <td><a href="CarControl?opt=4&ident=${cars.id}"> Modyfikuj | </a></td>
-    <td><a href="CarControl?opt=5&ident=${cars.id}">Usuń |</a></td>
-    <td><a href="CarControl?opt=1"> Powrót do listy Samochodów | </a></td>
+        <tr>
+            <th scope="col">OPIS SAMOCHODU</th>
+            <th scope="col">DANE SAMOCHODU</th>
+        </tr>
     </thead>
+    <tr><td>MODEL</td><td>${cars.model}</td></tr>
+    <tr><td>MARKA</td><td>${cars.brand}</td></tr>
+    <tr><td>ROK PRODUKCJI</td><td>${cars.yearProd}</td></tr>
+    <tr><td>NUMER REJESTRACYJNY</td><td>${cars.registration}</td></tr>
+    <tr><td>DATA NASTĘPNEGO PRZEGLĄDU</td><td>${newParsedDate}</td></tr>
+    <tr><td>WŁAŚCICIEL</td><td>${cl.name} ${cl.surname}</td></tr>
+
+    <tr>
+        <td>
+            <a href="CarControl?opt=8&ident=${cars.id}">| HISTORIA | </a>
+            <a href="CarControl?opt=7&ident=${cars.ownerId}">SAMOCHODY KLIENTA | </a>
+            <a href="CarControl?opt=1">SAMOCHODY |</a>
+        </td>
+        <td><a href="CarControl?opt=4&ident=${cars.id}">| MODYFIKUJ | </a><a href="CarControl?opt=5&ident=${cars.id}">USUŃ |</a></td>
+    </tr>
 </table>
 
 <%@ include file="../footer.jspf" %>

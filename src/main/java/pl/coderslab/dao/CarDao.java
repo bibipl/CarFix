@@ -28,7 +28,11 @@ public class CarDao {
                 preparedStatement.setString(2, car.getBrand());
                 preparedStatement.setInt(3, car.getYearProd());
                 preparedStatement.setString(4, car.getRegistration());
-                preparedStatement.setString(5, java.sql.Date.valueOf(car.getNextReview()).toString());
+                if (car.getNextReview() != null) {
+                    preparedStatement.setString(5, java.sql.Date.valueOf(car.getNextReview()).toString());
+                } else {
+                    preparedStatement.setString(5, null);
+                }
                 preparedStatement.setInt(6, car.getOwnerId());
                 preparedStatement.executeUpdate();
                 ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -47,7 +51,11 @@ public class CarDao {
             preparedStatement.setString(2, car.getBrand());
             preparedStatement.setInt(3, car.getYearProd());
             preparedStatement.setString(4, car.getRegistration());
-            preparedStatement.setString(5, java.sql.Date.valueOf(car.getNextReview()).toString());
+            if (car.getNextReview() != null) {
+                preparedStatement.setString(5, java.sql.Date.valueOf(car.getNextReview()).toString());
+            } else {
+                preparedStatement.setString(5, null);
+            }
             preparedStatement.setInt(6, car.getOwnerId());
             preparedStatement.setInt(7, car.getId());
             preparedStatement.executeUpdate();
@@ -157,7 +165,11 @@ public class CarDao {
             loadedCar.setBrand(resultSet.getString("brand"));
             loadedCar.setYearProd(resultSet.getInt("yearprod"));
             loadedCar.setRegistration(resultSet.getString("registration"));
-            loadedCar.setNextReview(resultSet.getDate("nextreview").toLocalDate());
+            if (resultSet.getDate("nextreview") != null) {
+                loadedCar.setNextReview(resultSet.getDate("nextreview").toLocalDate());
+            } else {
+                loadedCar.setNextReview(null);
+            }
             loadedCar.setOwnerId(resultSet.getInt("owner_id"));
         } catch (SQLException e) {
             return null;

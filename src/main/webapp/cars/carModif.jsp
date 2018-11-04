@@ -16,25 +16,45 @@
 <%@ include file="../header.jspf" %>
 <fmt:parseDate value="${cars.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
 <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
-<form method="post" action="CarControl">
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">OPIS SAMOCHODU</th>
+        <th scope="col">DANE SAMOCHODU</th>
+    </tr>
+    </thead>
+  <form method="post" action="CarControl">
     <input type="hidden" name="carId" value=${cars.id}>
-    <label>Marka: </label><input type="text" name="model" value="${cars.model}"><br>
-    <label>Model: </label><input type="text" name="brand" value="${cars.brand}"><br>
-    <label>Rok produkcji: </label><input type="number" name="yearProd" value="${cars.yearProd}"><br>
-    <label>Nr Rejestracyjny: </label><input type="text" name="registration" value="${cars.registration}"><br>
-    <label>Data następnego przeglądu: </label><input type="date" name="nextReview" value="${cars.nextReview}"><br>
-    <label>Właściciel: </label><input type="number" name="ownerId" value="${cars.ownerId}"><br>
-    <input type="submit" value="Zmień"><br>
-    <table>
-        <thead></thead>
-        <tr>
-            <td><a href="CarControl?opt=1">Powrót do listy Samochodów</a></td>
-            <td><a href="CarControl?opt=5&ident=${cars.id}">Usuń</a></td>
-        </tr>
-    </table>
+    <tr><td>MARKA</td><td><input type="text" name="model" value="${cars.model}"></td></tr>
+    <tr><td>MODEL</td><td><input type="text" name="brand" value="${cars.brand}"></td></tr>
+    <tr><td>ROK PRODUKCJI</td><td><input type="number" name="yearProd" value="${cars.yearProd}"></td></tr>
+    <tr><td>NUMER REJESTRACYJNY</td><td><input type="text" name="registration" value="${cars.registration}"></td></tr>
+    <tr><td>DATA NASTĘPNEGO PRZEGLĄDU</td><td><input type="date" name="nextReview" value="${cars.nextReview}"</td></tr>
+    <tr>
+        <td>WŁAŚCICIEL</td>
+        <td>
+            <select id="clent" name="ownerId">
+                <c:forEach items="${clients}" var="item">
+                    <c:if test="${cars.ownerId==item.id}">
+                        <option selected value="${item.id}">${item.name} ${item.surname}</option>
+                    </c:if>
+                    <c:if test="${cars.ownerId!=item.id}">
+                        <option value="${item.id}">${item.name} ${item.surname}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="CarControl?opt=1">| POWRÓT SAMOCHODY | </a>
+        <a href="CarControl?opt=7&ident=${cars.ownerId}">POWRÓT SAMOCHODY KLIENTA | </a>
+        <a href="CarControl?opt=5&ident=${cars.id}">USUŃ |</a></td>
+        <td><input type="submit" value="Zmień"></td>
+    </tr>
 
-</form>
 
+  </form>
+</table>
 
 
 <%@ include file="../footer.jspf" %>
