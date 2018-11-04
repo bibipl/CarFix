@@ -11,64 +11,76 @@
 <html>
 <head>
     <title>USUŃ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
 <%@ include file="../header.jspf" %>
 <%@ include file="dateFormat.jspf" %>
 
-<table>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">POZYCJA</th>
+            <th scope="col">DANE ZLECENIA</th>
+        </tr>
+    </thead>
     <tr><td>ID</td><td>${orders.id}</td></tr>
-    <tr><td>Samochód</td><td>${cars.model} | ${cars.brand} | ${cars.registration}</td></tr>
-    <tr><td>Pracownik</td><td>${employees.name} | ${employees.surname}</td></tr>
-    <c:choose>
-        <c:when test="${orders.status==1}">
-            <tr><td>Status naprawy</td><td>| Przyjęty |</td></tr>
-        </c:when>
-        <c:when test="${orders.status==2}">
-            <tr><td>Status naprawy</td><td>| Zatwierdzony |</td></tr>
-        </c:when>
-        <c:when test="${orders.status==3}">
-            <tr><td>Status naprawy</td><td>| Naprawiany |</td></tr>
-        </c:when>
-        <c:when test="${orders.status==4}">
-            <tr><td>Status naprawy</td><td>| Gotowy |</td></tr>
-        </c:when>
-        <c:otherwise>
-            <tr><td>Status naprawy</td><td>| Rezygnacja |</td></tr>
-        </c:otherwise>
-    </c:choose>
-    <tr><td>Opis problemu</td><td>${orders.problemDescript}</td></tr>
+    <tr><td>SAMOCHÓD</td><td>${cars.model} | ${cars.brand} | ${cars.registration}</td></tr>
+    <tr><td>PRACOWNIK</td><td>${employees.name} | ${employees.surname}</td></tr>
+    <tr>
+        <td>STATUS NAPRAWY</td>
+        <c:choose>
+            <c:when test="${orders.status==1}">
+                <td>| PRZYJĘTY |</td>
+            </c:when>
+            <c:when test="${orders.status==2}">
+                <td>| ZATWIERDZONY |</td>
+            </c:when>
+            <c:when test="${orders.status==3}">
+                <td>| NAPRAWIANY |</td>
+            </c:when>
+            <c:when test="${orders.status==4}">
+                <td>| GOTOWY |</td>
+            </c:when>
+            <c:otherwise>
+                <td>| REZYGNACJA |</td>
+            </c:otherwise>
+        </c:choose>
+    </tr>
+    <tr><td>OPIS PROBLEMU</td><td>${orders.problemDescript}</td></tr>
     <c:if test="${not empty orders.planStartDate}">
-        <tr><td>Planowane rozpoczęcie naprawy</td><td>${newParsedPlanDate}</td></tr>
+        <tr><td>PLANOWANE ROZPOCZĘCIE NAPRAWY</td><td>${newParsedPlanDate}</td></tr>
     </c:if>
     <c:if test="${empty orders.planStartDate}">
-        <tr><td>Planowane rozpoczęcie naprawy</td><td>Brak</td></tr>
+        <tr><td>PLANOWANE ROZPOCZĘCIE NAPRAWY</td><td>Brak</td></tr>
     </c:if>
     <c:if test="${not empty orders.realStartDate}">
-        <tr><td>Data rozpoczęcia naprawy</td><td>${newParsedRealDate}</td></tr>
+        <tr><td>DATA ROZPOCZĘCIA NAPRAWY</td><td>${newParsedRealDate}</td></tr>
     </c:if>
     <c:if test="${empty orders.realStartDate}">
-        <tr><td>Data rozpoczęcia naprawy</td><td>Brak</td></tr>
+        <tr><td>DATA ROZPOCZĘCIA NAPRAWY</td><td>Brak</td></tr>
     </c:if>
     <c:if test="${not empty orders.realEndDate}">
-        <tr><td>Data zakończenia naprawy</td><td>${newParsedRealDate}</td></tr>
+        <tr><td>DATA ZAKOŃCZENIA NAPRAWY</td><td>${newParsedEndDate}</td></tr>
     </c:if>
     <c:if test="${empty orders.realEndDate}">
-        <tr><td>Data zakończenia naprawy</td><td>Brak</td></tr>
+        <tr><td>DATA ZAKOŃCZENIA NAPRAWY</td><td>Brak</td></tr>
     </c:if>
-    <tr><td>Opis naprawy</td><td>${orders.fixDescript}</td></tr>
-    <tr><td>Koszt naprawy</td><td>${orders.valueServ}</td></tr>
-    <tr><td>Koszt części</td><td>${orders.valueParts}</td></tr>
-    <tr><td>Stawka godzinowa</td><td>${orders.hourPrice}</td></tr>
-    <tr><td>Liczba godzin</td><td>${orders.numOfHours}</td></tr>
+    <tr><td>OPIS NAPRAWY</td><td>${orders.fixDescript}</td></tr>
+    <tr><td>KOSZT NAPRAWY</td><td>${orders.valueServ}</td></tr>
+    <tr><td>KOSZT CZĘŚCI</td><td>${orders.valueParts}</td></tr>
+    <tr><td>STAWKA GODZINOWA</td><td>${orders.hourPrice}</td></tr>
+    <tr><td>LICZBA GODZIN</td><td>${orders.numOfHours}</td></tr>
+    <tr><td><b>NA PEWNO USUNĄĆ ZLECENIE ?</b></td><td><a href="OrderControl?opt=6&ident=${orders.id}">| TAK |</a><a href="OrderControl?opt=1"> NIE |</a></td></tr>
+    <tr><td></td><td></td></tr>
 </table>
-<h4> Na pewno chcesz usunąć to ZLECENIE z bazy danych ?</h4>
 <table>
-    <thead>
-    <td><a href="OrderControl?opt=1">| POWRÓT ZLECENIA | </a></td>
-    <td><a href="OrderControl?opt=6&ident=${orders.id}">| TAK |</a></td>
-    <td><a href="OrderControl?opt=1"> NIE |</a></td>
-    </thead>
+    <td>
+        <a href="OrderControl?opt=1">| POWRÓT ZLECENIA | </a>
+        <a href="OrderControl?opt=4&ident=${orders.id}">MODYFIKUJ ZLECENIE | </a>
+    </td>
 </table>
 
 <%@ include file="../footer.jspf" %>

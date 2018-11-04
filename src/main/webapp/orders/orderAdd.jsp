@@ -43,7 +43,7 @@
           <td>
               <select id="service" name="employeeId">
                   <c:forEach items="${employees}" var="item">
-                      <option selected value="${item.id}">${item.name} ${item.surname}</option>
+                      <option value="${item.id}">${item.name} ${item.surname}</option>
                   </c:forEach>
               </select>
           </td>
@@ -66,6 +66,7 @@
           </td>
           <td><input type="submit" value="DODAJ NOWE ZLECENIE"></td>
       </tr>
+      <tr><td></td><td></td></tr>
   </form>
 </table>
 <%@ include file="../footer.jspf" %>

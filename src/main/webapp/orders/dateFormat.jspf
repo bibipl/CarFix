@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:if test="${not empty orders.planStartDate}">
     <fmt:parseDate value="${orders.planStartDate}" pattern="yyyy-MM-dd" var="parsedStartDate" type="date" />
-    <fmt:formatDate value="${parsedStartDate}" var="newParsedStartDate" type="date" pattern="dd.MM.yyyy" />
+    <fmt:formatDate value="${parsedStartDate}" var="newParsedPlanDate" type="date" pattern="dd.MM.yyyy" />
 </c:if>
 <c:if test="${not empty orders.realStartDate}">
     <fmt:parseDate value="${orders.realStartDate}" pattern="yyyy-MM-dd" var="parsedRealDate" type="date" />

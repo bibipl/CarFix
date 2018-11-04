@@ -38,8 +38,10 @@
     </tr>
     </thead>
     <c:forEach items="${cars}" var="item">
-        <fmt:parseDate value="${item.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
-        <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
+        <c:if test="${not empty item.nextReview}">
+            <fmt:parseDate value="${item.nextReview}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
+            <fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="dd.MM.yyyy" />
+        </c:if>
         <tr>
             <td>${item.id}</td>
             <td>${item.model}</td>
