@@ -32,7 +32,7 @@
     <br>
     <tr>
         <td>Na pewno chcesz usunąć tego pracownika z bazy danych ?</td>
-        <td><a href="ClientControl?opt=6&ident=${cl.id}">| TAK | </a><a href="ClientControl?opt=1">NIE|</a></td>
+        <td><a href="EmployeeControl?opt=6&ident=${empl.id}">| TAK | </a><a href="EmployeeControl?opt=1">NIE|</a></td>
     </tr>
     <br>
     <tr>

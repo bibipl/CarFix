@@ -25,7 +25,6 @@
     </tr>
     </thead>
     <form method="post" action="OrderControl">
-        <input type="hidden" name="ordId" value="${orders.id}">
         <tr><td>NUMER ZLECENIA</td><td>${orders.id}</td></tr>
         <tr>
             <td>SAMOCHÓD</td>
@@ -108,6 +107,7 @@
         <tr><td>CENA NAPRAWY</td><td><input type="number" name="valueServ" step="0.01" value="${orders.valueServ}" step="0.01"></td></tr>
         <tr><td>KOSZT CZĘŚĆI</td><td><input type="number" name="valueParts" value="${orders.valueParts}" step="0.01"></td></tr>
         <tr><td>LICZBA ROBOCZOGODZIN</td><td><input type="number" name="numOfHours" value="${orders.numOfHours}" step="0.1"></td></tr>
+        <input type="hidden" name="orderId" value="${orders.id}">
         <tr>
             <td>
                 <a href="OrderControl?opt=1">| POWRÓT ZLECENIA | </a>

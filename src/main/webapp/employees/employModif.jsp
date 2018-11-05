@@ -28,7 +28,7 @@
     </tr>
     </thead>
     <form method="post" action="EmployeeControl">
-        <input type="hidden" id="empId" name="empId" value=${empl.id}>
+        <input type="hidden" id="emplId" name="emplId" value=${empl.id}>
 
         <tr><td>IMIĘ</td><td><input type="text" name="name" value="${empl.name}"></td></tr>
         <tr><td>NAZWISKO</td><td><input type="text" name="surname" value="${empl.surname}"></td></tr>
